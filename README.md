@@ -9,6 +9,10 @@ training conditions. Keep the dataset, model, optimizer, augmentation, batch
 size, weight decay, and training budget fixed whenever possible so that the
 learning-rate policy is the main changing variable.
 
+Momentum is fixed at `0.9` and weight decay is fixed at `5e-4` in `config.py`.
+They are intentionally not exposed as command-line options for the main
+scheduler comparison.
+
 ## Current Local Assets
 
 - Project plan PDF: `../FT5_Semester_Project_Plan_Wenjun_Huang.pdf`
@@ -60,6 +64,10 @@ Required first outputs:
 - Train/validation accuracy curves
 - Learning-rate curve
 - Configuration and seed recorded for every run
+
+`results/results.csv` stores one row per completed run with experiment metadata.
+Each run also writes `results/<run_id>_metadata.json` and
+`results/<run_id>_epochs.csv`.
 
 ## Environment
 

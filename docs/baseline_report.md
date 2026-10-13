@@ -26,6 +26,33 @@
 - Curves: `plots/meeting_baseline_multistep_seed1_curves.png`
 - Checkpoint: `checkpoints/meeting_baseline_multistep_seed1_best.pt`
 
+## Record Keeping
+
+The training script now records the experimental metadata required by the
+project plan:
+
+- experiment ID
+- date
+- Git commit
+- dataset
+- architecture
+- optimizer
+- scheduler
+- initial, minimum, and maximum LR
+- scheduler parameters
+- batch size
+- momentum
+- weight decay
+- epochs
+- seed
+- best and final validation accuracy
+- test accuracy and loss
+- training time
+- checkpoint path
+- metadata JSON path
+
+Per-epoch logs are saved separately with loss, accuracy, LR, and epoch time.
+
 ## Observations
 
 Validation accuracy improved sharply after the first MultiStepLR decay from

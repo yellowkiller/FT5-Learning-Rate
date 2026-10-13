@@ -47,9 +47,22 @@ speed training and act as regularization.
 
 Key values to log: `max_lr`, total steps, pct_start, annealing strategy.
 
+## Warm-Up + Cosine Decay
+
+The learning rate starts very small, increases gradually during a warm-up
+period, then follows cosine decay. Warm-up reduces early optimization shocks,
+while cosine decay gives smooth late-stage convergence.
+
+Key values to log: warm-up length, start factor, maximum LR, cosine length,
+minimum LR.
+
 ## Controlled Comparison Rule
 
 Only the scheduler should change in the main comparison. Keep dataset split,
 architecture, optimizer, momentum, weight decay, batch size, augmentation,
 epochs, and evaluation protocol fixed.
+
+In this codebase, momentum is fixed at `0.9` and weight decay is fixed at
+`5e-4`. These are controlled baseline constants, not scheduler-specific tuning
+knobs.
 

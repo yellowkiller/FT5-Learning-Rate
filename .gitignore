@@ -2,5 +2,6 @@ __pycache__/
 *.pyc
 .venv/
 checkpoints/*.pt
+**/checkpoints/*.pt
 !checkpoints/.gitkeep
 

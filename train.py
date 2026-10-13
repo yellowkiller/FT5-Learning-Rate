@@ -1,6 +1,10 @@
 import argparse
 import csv
+import json
+import subprocess
 import time
+from dataclasses import asdict
+from datetime import datetime
 from pathlib import Path
 
 import torch
@@ -26,13 +30,14 @@ def parse_args() -> ExperimentConfig:
     parser = argparse.ArgumentParser(description="FT5 CIFAR-10 learning-rate experiment")
     parser.add_argument("--data-dir", default="../data")
     parser.add_argument("--run-name", default="baseline")
+    parser.add_argument("--output-dir", default="results")
+    parser.add_argument("--checkpoint-dir", default="checkpoints")
+    parser.add_argument("--plot-dir", default="plots")
     parser.add_argument("--model", default="resnet18")
     parser.add_argument("--scheduler", default="constant")
     parser.add_argument("--epochs", type=int, default=200)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=0.1)
-    parser.add_argument("--momentum", type=float, default=0.9)
-    parser.add_argument("--weight-decay", type=float, default=5e-4)
     parser.add_argument("--seed", type=int, default=1)
     parser.add_argument("--num-workers", type=int, default=0)
     parser.add_argument("--validation-size", type=int, default=5000)
@@ -42,14 +47,15 @@ def parse_args() -> ExperimentConfig:
 
     return ExperimentConfig(
         data_dir=args.data_dir,
+        output_dir=args.output_dir,
+        checkpoint_dir=args.checkpoint_dir,
+        plot_dir=args.plot_dir,
         run_name=args.run_name,
         model=args.model,
         scheduler=args.scheduler,
         epochs=args.epochs,
         batch_size=args.batch_size,
         initial_lr=args.lr,
-        momentum=args.momentum,
-        weight_decay=args.weight_decay,
         seed=args.seed,
         num_workers=args.num_workers,
         validation_size=args.validation_size,
@@ -156,6 +162,14 @@ def run_epoch(model, loader, criterion, device, optimizer=None, scheduler=None, 
 def append_summary(path: Path, row: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     exists = path.exists()
+    if exists:
+        with path.open("r", newline="", encoding="utf-8") as handle:
+            reader = csv.reader(handle)
+            existing_header = next(reader, [])
+        if existing_header != list(row):
+            archived_path = path.with_name(f"{path.stem}_legacy_{int(time.time())}{path.suffix}")
+            path.rename(archived_path)
+            exists = False
     with path.open("a", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(row))
         if not exists:
@@ -163,12 +177,34 @@ def append_summary(path: Path, row: dict) -> None:
         writer.writerow(row)
 
 
+def get_git_commit() -> str:
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "--short", "HEAD"],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+        return result.stdout.strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "unknown"
+
+
+def write_json(path: Path, data: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        json.dump(data, handle, indent=2, sort_keys=True)
+
+
 def main() -> None:
     config = parse_args()
     set_seed(config.seed)
     device = select_device(config.device)
 
-    run_id = f"{config.run_name}_{config.scheduler}_seed{config.seed}"
+    run_date = datetime.now().astimezone().isoformat(timespec="seconds")
+    git_commit = get_git_commit()
+    experiment_id = f"{config.run_name}_{config.scheduler}_seed{config.seed}"
+    run_id = experiment_id
     output_dir = Path(config.output_dir)
     checkpoint_dir = Path(config.checkpoint_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -183,9 +219,12 @@ def main() -> None:
         momentum=config.momentum,
         weight_decay=config.weight_decay,
     )
-    scheduler, scheduler_step = build_scheduler(
+    scheduler, scheduler_step, scheduler_metadata = build_scheduler(
         config.scheduler, optimizer, epochs=config.epochs, steps_per_epoch=len(train_loader)
     )
+    train_size = len(train_loader.dataset)
+    validation_size = len(val_loader.dataset)
+    test_size = len(test_loader.dataset)
 
     epoch_logger = CsvLogger(
         output_dir / f"{run_id}_epochs.csv",
@@ -201,8 +240,35 @@ def main() -> None:
     )
 
     best_val_acc = 0.0
+    final_val_acc = 0.0
     best_checkpoint = checkpoint_dir / f"{run_id}_best.pt"
     start_time = time.perf_counter()
+    metadata = {
+        "experiment_id": experiment_id,
+        "date": run_date,
+        "git_commit": git_commit,
+        "dataset": config.dataset,
+        "architecture": config.model,
+        "optimizer": config.optimizer,
+        "scheduler": scheduler_metadata["scheduler_name"],
+        "scheduler_params": scheduler_metadata["scheduler_params"],
+        "scheduler_step": scheduler_metadata["scheduler_step"],
+        "initial_lr": scheduler_metadata["initial_lr"],
+        "minimum_lr": scheduler_metadata["min_lr"],
+        "maximum_lr": scheduler_metadata["max_lr"],
+        "batch_size": config.batch_size,
+        "momentum": config.momentum,
+        "weight_decay": config.weight_decay,
+        "epochs": config.epochs,
+        "seed": config.seed,
+        "train_size": train_size,
+        "validation_size": validation_size,
+        "test_size": test_size,
+        "device": str(device),
+        "config": asdict(config),
+    }
+    metadata_path = output_dir / f"{run_id}_metadata.json"
+    write_json(metadata_path, metadata)
 
     print(f"Device: {device}")
     print(f"Run: {run_id}")
@@ -213,6 +279,7 @@ def main() -> None:
             model, train_loader, criterion, device, optimizer, scheduler, scheduler_step, config.quiet
         )
         val_loss, val_acc = run_epoch(model, val_loader, criterion, device, quiet=config.quiet)
+        final_val_acc = val_acc
         if scheduler is not None and scheduler_step == "epoch":
             scheduler.step()
 
@@ -238,7 +305,8 @@ def main() -> None:
             torch.save(
                 {
                     "model_state": model.state_dict(),
-                    "config": vars(config),
+                    "config": asdict(config),
+                    "metadata": metadata,
                     "epoch": epoch,
                     "best_val_acc": best_val_acc,
                 },
@@ -253,21 +321,29 @@ def main() -> None:
     append_summary(
         output_dir / "results.csv",
         {
-            "run_id": run_id,
+            "experiment_id": experiment_id,
+            "date": run_date,
+            "git_commit": git_commit,
             "dataset": config.dataset,
-            "model": config.model,
+            "architecture": config.model,
             "optimizer": config.optimizer,
-            "scheduler": config.scheduler,
-            "initial_lr": config.initial_lr,
+            "scheduler": scheduler_metadata["scheduler_name"],
+            "scheduler_params": scheduler_metadata["scheduler_params"],
+            "initial_lr": scheduler_metadata["initial_lr"],
+            "minimum_lr": scheduler_metadata["min_lr"],
+            "maximum_lr": scheduler_metadata["max_lr"],
             "batch_size": config.batch_size,
+            "momentum": config.momentum,
             "weight_decay": config.weight_decay,
             "epochs": config.epochs,
             "seed": config.seed,
             "best_val_acc": best_val_acc,
+            "final_val_acc": final_val_acc,
             "test_loss": test_loss,
             "test_acc": test_acc,
             "training_time_seconds": total_seconds,
             "checkpoint_path": str(best_checkpoint),
+            "metadata_path": str(metadata_path),
         },
     )
     print(f"Finished {run_id}: best_val_acc={best_val_acc:.4f}, test_acc={test_acc:.4f}")
