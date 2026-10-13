@@ -1,0 +1,17 @@
+name: ft5-lr
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pip
+  - pip:
+      - --index-url
+      - https://download.pytorch.org/whl/cu132
+      - --extra-index-url
+      - https://pypi.org/simple
+      - torch
+      - torchvision
+      - pandas
+      - matplotlib
+      - tqdm
+      - pillow

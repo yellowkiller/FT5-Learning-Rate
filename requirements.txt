@@ -1,0 +1,8 @@
+--index-url https://download.pytorch.org/whl/cu132
+torch
+torchvision
+--extra-index-url https://pypi.org/simple
+pandas
+matplotlib
+tqdm
+pillow

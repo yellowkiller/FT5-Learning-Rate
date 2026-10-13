@@ -1,0 +1,3 @@
+run_id,dataset,model,optimizer,scheduler,initial_lr,batch_size,weight_decay,epochs,seed,best_val_acc,test_loss,test_acc,training_time_seconds,checkpoint_path
+smoke_constant_seed1,cifar10,resnet18,sgd,constant,0.1,256,0.0005,1,1,0.393,1.6549616733551025,0.3932,22.776402399998915,checkpoints\smoke_constant_seed1_best.pt
+meeting_baseline_multistep_seed1,cifar10,resnet18,sgd,multistep,0.1,128,0.0005,30,1,0.9272,0.25155633459091187,0.9195,596.3583894000003,checkpoints\meeting_baseline_multistep_seed1_best.pt
