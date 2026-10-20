@@ -5,14 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Plot training curves from an epoch CSV log.")
-    parser.add_argument("epoch_csv")
-    parser.add_argument("--output-dir", default="plots")
-    args = parser.parse_args()
-
-    csv_path = Path(args.epoch_csv)
-    output_dir = Path(args.output_dir)
+def plot_single_run(csv_path: Path, output_dir: Path) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     data = pd.read_csv(csv_path)
     run_name = csv_path.stem.replace("_epochs", "")
@@ -38,7 +31,16 @@ def main() -> None:
     fig.tight_layout()
     output_path = output_dir / f"{run_name}_curves.png"
     fig.savefig(output_path, dpi=160)
+    plt.close(fig)
     print(f"Wrote {output_path.resolve()}")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Plot training curves from an epoch CSV log.")
+    parser.add_argument("epoch_csv", type=Path)
+    parser.add_argument("--output-dir", type=Path, default=Path("plots"))
+    args = parser.parse_args()
+    plot_single_run(args.epoch_csv, args.output_dir)
 
 
 if __name__ == "__main__":

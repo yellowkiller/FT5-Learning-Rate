@@ -7,6 +7,8 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 
+from plot_training_curves import plot_single_run
+
 
 SMOKETEST_SCHEDULERS = [
     "constant",
@@ -27,33 +29,6 @@ def slug_float(value: float) -> str:
 def run_command(command: list[str], cwd: Path) -> None:
     print(" ".join(command), flush=True)
     subprocess.run(command, cwd=cwd, check=True)
-
-
-def plot_single_run(epoch_csv: Path, output_dir: Path) -> None:
-    data = pd.read_csv(epoch_csv)
-    run_name = epoch_csv.stem.replace("_epochs", "")
-    output_dir.mkdir(parents=True, exist_ok=True)
-
-    fig, axes = plt.subplots(3, 1, figsize=(8, 10), sharex=True)
-    axes[0].plot(data["epoch"], data["train_loss"], label="train")
-    axes[0].plot(data["epoch"], data["val_loss"], label="validation")
-    axes[0].set_ylabel("Loss")
-    axes[0].legend()
-
-    axes[1].plot(data["epoch"], data["train_acc"], label="train")
-    axes[1].plot(data["epoch"], data["val_acc"], label="validation")
-    axes[1].set_ylabel("Accuracy")
-    axes[1].legend()
-
-    axes[2].plot(data["epoch"], data["lr"], label="learning rate")
-    axes[2].set_ylabel("LR")
-    axes[2].set_xlabel("Epoch")
-    axes[2].legend()
-
-    fig.suptitle(run_name)
-    fig.tight_layout()
-    fig.savefig(output_dir / f"{run_name}_curves.png", dpi=160)
-    plt.close(fig)
 
 
 def collect_results(experiment_dir: Path) -> tuple[pd.DataFrame, dict[str, pd.DataFrame]]:

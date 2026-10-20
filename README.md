@@ -13,6 +13,68 @@ Momentum is fixed at `0.9` and weight decay is fixed at `5e-4` in `config.py`.
 They are intentionally not exposed as command-line options for the main
 scheduler comparison.
 
+Protocol v2 explicitly disables momentum cycling in CyclicLR and OneCycleLR.
+Earlier results for those two methods used scheduler-controlled momentum and
+must not be pooled with v2 results. Training seeds vary model initialization,
+augmentation and sampling; `--split-seed 1` independently fixes the 45,000/5,000
+training/validation partition. Each run saves the split indices, split hash,
+source hash and per-epoch momentum alongside existing metrics.
+
+## Validation-Only Pilot And Frozen Configuration
+
+```powershell
+python scripts/run_lr_pilot.py --pilot-epochs 3 --range-steps 704
+```
+
+This runs a training-only exponential LR range test, then two equal-budget
+LR candidates per scheduler. Candidates bracket conservative values below the
+observed smoothed-loss minimum on a fixed grid. Every candidate uses the full
+training/validation split. Test accuracy is left empty during tuning.
+Selection uses final validation accuracy, then lower validation loss and LR.
+The three-epoch screen is economical and does not establish optimal long-run
+settings. Outputs are timestamped under `results/lr_pilots/`, including plots,
+pilot logs, source snapshots, selected settings and `formal_config.json`.
+
+After reviewing a completed pilot, reproduce a main run with its frozen file:
+
+```powershell
+python train.py --config results/lr_pilots/<pilot-folder>/formal_config.json --scheduler cosine --seed 1 --run-name formal_v2 --output-dir results/formal_v2/cosine/seed1 --checkpoint-dir checkpoints/formal_v2/cosine/seed1
+```
+
+The frozen file sets the 150-epoch budget and selected scheduler LR. Repeat
+with seeds 2 and 3 and separate output directories. Explicit CLI arguments can
+override defaults and are recorded in metadata. Schedule durations scale with
+the chosen epoch budget; momentum and weight decay stay fixed. Run jobs
+sequentially on the same GPU for comparable timing. This command is documented
+for the next stage; the pilot script does not launch main experiments.
+
+## Completed Formal Comparison and Week 3 Report
+
+The protocol-v2 experiment completed all eight schedulers with seeds 1, 2 and 3
+for 150 epochs. The authoritative folder is
+`results/formal_multiseed/20261017_092528_epochs150_seeds1-3_fixedsplit_v2/`.
+Its `plots/README.md` indexes the per-seed figures; `week3_baseline/README.md`
+contains the fixed/StepLR report and checkpoint verification results.
+Meeting 02 deliverables and slides are kept outside this Git repository at
+`../meeting_submissions/meeting_02_reliable_baseline/`.
+
+Evaluate an existing local checkpoint without training (validation by default):
+
+```powershell
+python test.py <checkpoint.pt> --split validation --data-dir ../data --device cuda
+```
+
+Generate figures or regenerate the verified baseline report from saved runs:
+
+```powershell
+python scripts/plot_multiseed_results.py <experiment-directory>
+python scripts/report_week3_baseline.py <experiment-directory>
+```
+
+Read [the code audit](docs/code_audit_meeting02.md) for review scope and remaining
+limitations. Dataset, checkpoints, temporary logs and abandoned campaigns stay
+local; small completed result files and figures are versioned.
+
 ## Current Local Assets
 
 - Project plan PDF: `../FT5_Semester_Project_Plan_Wenjun_Huang.pdf`

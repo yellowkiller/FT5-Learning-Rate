@@ -1,0 +1,2 @@
+# Preserve exact Python bytes used by recorded source SHA256 values.
+*.py -text

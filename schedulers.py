@@ -21,7 +21,7 @@ def build_scheduler(name: str, optimizer: torch.optim.Optimizer, *, epochs: int,
             "scheduler_name": "step",
             "scheduler_step": "epoch",
             "initial_lr": initial_lr,
-            "min_lr": initial_lr * gamma,
+            "min_lr": initial_lr * gamma ** ((epochs - 1) // step_size),
             "max_lr": initial_lr,
             "scheduler_params": f"step_size={step_size};gamma={gamma}",
         }
@@ -107,7 +107,7 @@ def build_scheduler(name: str, optimizer: torch.optim.Optimizer, *, epochs: int,
             "initial_lr": initial_lr,
             "min_lr": base_lr,
             "max_lr": max_lr,
-            "scheduler_params": f"base_lr={base_lr};max_lr={max_lr};step_size_up={step_size_up};mode={mode}",
+            "scheduler_params": f"base_lr={base_lr};max_lr={max_lr};step_size_up={step_size_up};mode={mode};cycle_momentum=False",
         }
         return torch.optim.lr_scheduler.CyclicLR(
             optimizer,
@@ -115,7 +115,7 @@ def build_scheduler(name: str, optimizer: torch.optim.Optimizer, *, epochs: int,
             max_lr=max_lr,
             step_size_up=step_size_up,
             mode=mode,
-            cycle_momentum=True,
+            cycle_momentum=False,
         ), "batch", metadata
     if name in {"onecycle", "onecyclelr"}:
         max_lr = initial_lr
@@ -130,7 +130,7 @@ def build_scheduler(name: str, optimizer: torch.optim.Optimizer, *, epochs: int,
             "max_lr": max_lr,
             "scheduler_params": (
                 f"max_lr={max_lr};epochs={epochs};steps_per_epoch={steps_per_epoch};"
-                f"pct_start={pct_start};div_factor={div_factor};final_div_factor={final_div_factor}"
+                f"pct_start={pct_start};div_factor={div_factor};final_div_factor={final_div_factor};cycle_momentum=False"
             ),
         }
         return torch.optim.lr_scheduler.OneCycleLR(
@@ -141,6 +141,7 @@ def build_scheduler(name: str, optimizer: torch.optim.Optimizer, *, epochs: int,
             pct_start=pct_start,
             div_factor=div_factor,
             final_div_factor=final_div_factor,
+            cycle_momentum=False,
         ), "batch", metadata
     raise ValueError(f"Unknown scheduler: {name}")
 

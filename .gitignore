@@ -4,4 +4,8 @@ __pycache__/
 checkpoints/*.pt
 **/checkpoints/*.pt
 !checkpoints/.gitkeep
+*.log
+results/formal_150epoch/
+results/lr_pilots/20261016_105929*/
+**/finish_seed2.ps1
 
