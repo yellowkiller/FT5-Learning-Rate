@@ -1,0 +1,29 @@
+{
+  "batch_size": 128,
+  "candidate_rule": "Adjacent grid values at/below smoothed-loss minimum; minimum grid bracket 0.01/0.03",
+  "candidates": [
+    0.1,
+    0.3
+  ],
+  "momentum": 0.9,
+  "pilot_epochs": 3,
+  "range_minimum_lr": 0.9869839709001872,
+  "range_steps_completed": 704,
+  "range_steps_requested": 704,
+  "schedulers": [
+    "constant",
+    "step",
+    "multistep",
+    "cosine",
+    "warmrestart",
+    "cyclic",
+    "onecycle",
+    "warmup_cosine"
+  ],
+  "scope": "Short-horizon pilot only; not proof of optimal 150-epoch hyperparameters",
+  "seed": 1,
+  "selection": "Highest final validation accuracy; tie: lower final validation loss, then lower LR",
+  "split_seed": 1,
+  "test_evaluation": false,
+  "weight_decay": 0.0005
+}

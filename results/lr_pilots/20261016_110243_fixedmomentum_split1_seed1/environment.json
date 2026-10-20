@@ -1,0 +1,7 @@
+{
+  "cuda": "13.2",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+  "python": "3.11.17 | packaged by conda-forge | (main, Oct  6 2026, 23:51:21) [MSC v.1944 64 bit (AMD64)]",
+  "torch": "2.14.1+cu132",
+  "torchvision": "0.29.1+cu132"
+}

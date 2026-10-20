@@ -1,0 +1,74 @@
+{
+  "batch_size": 128,
+  "cycle_momentum": false,
+  "data_dir": "../data",
+  "dataset": "cifar10",
+  "device": "cuda",
+  "epochs": 150,
+  "evaluation_augmentation": "none",
+  "limitations": "One tuning seed, two candidates and 3 pilot epochs; rankings may change at 150 epochs. No test data used.",
+  "loss": "CrossEntropyLoss",
+  "model": "resnet18",
+  "momentum": 0.9,
+  "normalization_mean": [
+    0.4914,
+    0.4822,
+    0.4465
+  ],
+  "normalization_std": [
+    0.2023,
+    0.1994,
+    0.201
+  ],
+  "num_workers": 0,
+  "optimizer": "sgd",
+  "pilot_dir": "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\lr_pilots\\20261016_110243_fixedmomentum_split1_seed1",
+  "protocol_version": "fixed-momentum-fixed-split-v2",
+  "schedule_rule": "schedulers.py; epoch-based parameters scale with the 150-epoch budget",
+  "schedulers": {
+    "constant": {
+      "initial_lr": 0.1,
+      "lr": 0.1,
+      "max_lr": 0.1,
+      "min_lr": 0.1,
+      "scheduler_name": "constant",
+      "scheduler_params": "fixed_lr",
+      "scheduler_step": "epoch"
+    },
+    "step": {
+      "initial_lr": 0.1,
+      "lr": 0.1,
+      "max_lr": 0.1,
+      "min_lr": 0.0010000000000000002,
+      "scheduler_name": "step",
+      "scheduler_params": "step_size=50;gamma=0.1",
+      "scheduler_step": "epoch"
+    }
+  },
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "selection_metric": "final_val_acc",
+  "source_hashes": {
+    "config.py": "57aea0ce7aa261ac0e0a4b30dd5c9455cac955d49a495dc5089c1554e2e99e56",
+    "models/resnet.py": "bd8c605c33607bb130cb5988b16d663e9b0bff04114d16864f1b1b11373dd55f",
+    "schedulers.py": "ef74ba29e2df23206c37134d5f9d33fe0603cbd50b3affbf6ac87f3a57b8b8c8",
+    "scripts/run_lr_pilot.py": "4fea7b60e155b3889ef8119cdde126e74c00c38e24dceff5dc1eae2f591bb0dc",
+    "train.py": "603cdfc2298c4098f2346b5d32e9044776e4e3d9c9c235556fbd7ebf745018d4",
+    "utils/logger.py": "64988a8bfb319be79c2158b361edb6735a59308382ce4d780a20c3bfbd4fc8fb",
+    "utils/metrics.py": "a4cd9677161a67c7c5faee1dcb35c87bce3d768d954f748f7dfa0b71db556a60",
+    "utils/seed.py": "58e0976c03260610b9d3de528ac1c3ffd8a409bd4ffbd220ee9a1d286abb6516"
+  },
+  "source_sha256": "94450c9eb9a70d3ec5737729c43479c03ae46b34f2f9afeb5f96dd582d1c8efd",
+  "split_seed": 1,
+  "split_sha256": "eaeb385c407962ceb057cbe0552bff8071a52d9b2c66a0c7432da30205174ad1",
+  "status": "frozen_for_main_comparison",
+  "training_augmentation": [
+    "RandomCrop(32,padding=4)",
+    "RandomHorizontalFlip"
+  ],
+  "validation_size": 5000,
+  "weight_decay": 0.0005
+}
