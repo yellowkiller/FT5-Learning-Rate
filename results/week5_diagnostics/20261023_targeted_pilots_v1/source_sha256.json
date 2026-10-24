@@ -1,0 +1,20 @@
+{
+  "config.py": "145a49e4e101d4517bcb2299683758050cf7119be29b4fbb99f895e63c48d8d3",
+  "models/resnet.py": "bd8c605c33607bb130cb5988b16d663e9b0bff04114d16864f1b1b11373dd55f",
+  "schedulers.py": "739413c94dea3e4eab727f511dc4497fa3f772cf4137e79d9653894a4b292058",
+  "scripts/export_cifar10_preview.py": "61aa8e45a23e195267476f8e1054375715b27d1425799a95eefe61df9750c273",
+  "scripts/plot_multiseed_results.py": "b6ccec4aeae784d3d733dbb6ee570ea34901205ce7b62bfcc083c60086cec0d2",
+  "scripts/plot_scheduler_schedules.py": "529676ef022bbcdb26875017ba0373ccd72fb0b6b526cc8b566a3f3e8ce3559e",
+  "scripts/plot_training_curves.py": "3c1b10a500102b56d91800c4e96a5154feec2aeaae5e88017edf7dbb5c8202e1",
+  "scripts/report_week3_baseline.py": "ef67fe42219317ded5637681677890917b246fb9a3a08855ec6e7427343a70ba",
+  "scripts/run_lr_pilot.py": "4fea7b60e155b3889ef8119cdde126e74c00c38e24dceff5dc1eae2f591bb0dc",
+  "scripts/run_smoketest_experiment.py": "d198b3c4f019991faa1997adebbe241e9d5e3123e206418e157f4e2031ef6330",
+  "scripts/run_week5_diagnostics.py": "7a000a0e231bb1bf5ca5a794b44722823369f4a4d77aa9980c0fc0fdfcb4db6a",
+  "test.py": "be16caac67ccdebb3365ff92d553cc3700eacb3427384a56cca116029ddf1e37",
+  "tests/test_controlled_protocol.py": "0af38a091692eec6caf6854070a88493a2e9d8989388edc535a1d827dc291e01",
+  "tests/test_diagnostic_options.py": "8bb1ccb84a4b0f84d7c7a1c0ad0bf485510e5c02dadfeafe6539d63110ec3f72",
+  "train.py": "ee481a4a0e6b9da9f8a43eb1e92911fd68b43b575f928f9d432ebf478a96465d",
+  "utils/logger.py": "64988a8bfb319be79c2158b361edb6735a59308382ce4d780a20c3bfbd4fc8fb",
+  "utils/metrics.py": "a4cd9677161a67c7c5faee1dcb35c87bce3d768d954f748f7dfa0b71db556a60",
+  "utils/seed.py": "58e0976c03260610b9d3de528ac1c3ffd8a409bd4ffbd220ee9a1d286abb6516"
+}

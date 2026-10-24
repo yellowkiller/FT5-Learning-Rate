@@ -1,0 +1,4 @@
+id,options,pilot_epochs,scheduler,changed_from_original,seed1_delta
+cyclic_lower_floor,{'base_lr': 0.001},30,cyclic,True,0.012199999999999989
+onecycle_original,{'pct_start': 0.3},30,onecycle,False,-3.999999999981796e-05
+warmrestart_aligned,{'T_0': 50},150,warmrestart,True,0.11299999999999999

@@ -1,0 +1,35 @@
+{
+  "rule": "Alternative requires >0.2 percentage point validation tail-5 improvement; close pairs get seed2; require positive paired deltas and mean >0.2pp, otherwise retain original. No test selection.",
+  "selected": [
+    {
+      "changed_from_original": true,
+      "id": "cyclic_lower_floor",
+      "options": {
+        "base_lr": 0.001
+      },
+      "pilot_epochs": 30,
+      "scheduler": "cyclic",
+      "seed1_delta": 0.012199999999999989
+    },
+    {
+      "changed_from_original": false,
+      "id": "onecycle_original",
+      "options": {
+        "pct_start": 0.3
+      },
+      "pilot_epochs": 30,
+      "scheduler": "onecycle",
+      "seed1_delta": -3.999999999981796e-05
+    },
+    {
+      "changed_from_original": true,
+      "id": "warmrestart_aligned",
+      "options": {
+        "T_0": 50
+      },
+      "pilot_epochs": 150,
+      "scheduler": "warmrestart",
+      "seed1_delta": 0.11299999999999999
+    }
+  ]
+}

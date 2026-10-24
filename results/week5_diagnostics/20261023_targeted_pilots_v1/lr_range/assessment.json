@@ -1,0 +1,8 @@
+{
+  "historical_max_0p1_passes_safety_gate": true,
+  "maximum_observed_lr": 3.0000000000000004,
+  "minimum_smoothed_loss_lr": 0.8054656064262552,
+  "scope": "Training-only screening; minimum is not optimal validation LR. Shared overhead for both batch schedulers. No range-test weights reused.",
+  "steps": 1056,
+  "stop_reason": "scan_limit"
+}

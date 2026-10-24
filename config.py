@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -11,6 +11,7 @@ class ExperimentConfig:
     model: str = "resnet18"
     optimizer: str = "sgd"
     scheduler: str = "constant"
+    scheduler_options: dict = field(default_factory=dict)
     batch_size: int = 128
     epochs: int = 200
     momentum: float = 0.9

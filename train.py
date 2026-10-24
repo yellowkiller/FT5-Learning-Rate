@@ -36,6 +36,7 @@ def parse_args() -> ExperimentConfig:
     parser.add_argument("--plot-dir", default="plots")
     parser.add_argument("--model", default="resnet18")
     parser.add_argument("--scheduler", default="constant")
+    parser.add_argument("--scheduler-options", type=json.loads, default={}, help="JSON scheduler overrides for documented diagnostic experiments.")
     parser.add_argument("--epochs", type=int, default=200)
     parser.add_argument("--batch-size", type=int, default=128)
     parser.add_argument("--lr", type=float, default=0.1)
@@ -57,6 +58,7 @@ def parse_args() -> ExperimentConfig:
         if settings is None:
             parser.error("Scheduler is absent from the frozen configuration.")
         parser.set_defaults(lr=settings["lr"])
+        parser.set_defaults(scheduler_options=settings.get("options", {}))
     args = parser.parse_args()
     if args.epochs < 1 or args.batch_size < 1 or args.num_workers < 0 or not 0 < args.validation_size < 50000:
         parser.error("Invalid epochs, batch size, num_workers or validation size.")
@@ -69,6 +71,7 @@ def parse_args() -> ExperimentConfig:
         run_name=args.run_name,
         model=args.model,
         scheduler=args.scheduler,
+        scheduler_options=args.scheduler_options,
         epochs=args.epochs,
         batch_size=args.batch_size,
         initial_lr=args.lr,
@@ -238,7 +241,8 @@ def main() -> None:
         weight_decay=config.weight_decay,
     )
     scheduler, scheduler_step, scheduler_metadata = build_scheduler(
-        config.scheduler, optimizer, epochs=config.epochs, steps_per_epoch=len(train_loader)
+        config.scheduler, optimizer, epochs=config.epochs, steps_per_epoch=len(train_loader),
+        options=config.scheduler_options,
     )
     train_size = len(train_loader.dataset)
     validation_size = len(val_loader.dataset)

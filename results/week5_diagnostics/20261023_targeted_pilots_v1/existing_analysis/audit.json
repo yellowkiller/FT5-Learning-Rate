@@ -1,0 +1,9 @@
+{
+  "epoch_lr_matches": 3600,
+  "historical_source_sha256": "94450c9eb9a70d3ec5737729c43479c03ae46b34f2f9afeb5f96dd582d1c8efd",
+  "interpretation": "End-of-scan minimum is not a demonstrated divergence boundary; LR floor and restart windows are associations, not causal proof.",
+  "old_range_maximum_lr": 1.0,
+  "old_range_minimum_lr": 0.9869839709001872,
+  "runs": 24,
+  "split_sha256": "eaeb385c407962ceb057cbe0552bff8071a52d9b2c66a0c7432da30205174ad1"
+}

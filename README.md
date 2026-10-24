@@ -9,6 +9,14 @@ training conditions. Keep the dataset, model, optimizer, augmentation, batch
 size, weight decay, and training budget fixed whenever possible so that the
 learning-rate policy is the main changing variable.
 
+## Latest Week 5 Results
+
+The completed LR-range and targeted pilot campaign is recorded in
+`results/week5_diagnostics/20261023_targeted_pilots_v1/`. It contains eight
+validation-only pilot runs and six additional 150-epoch runs for the two
+strategies whose parameters changed. Original and new parameter versions remain
+separate in the comparison tables.
+
 Momentum is fixed at `0.9` and weight decay is fixed at `5e-4` in `config.py`.
 They are intentionally not exposed as command-line options for the main
 scheduler comparison.
@@ -74,6 +82,9 @@ python scripts/report_week3_baseline.py <experiment-directory>
 Read [the code audit](docs/code_audit_meeting02.md) for review scope and remaining
 limitations. Dataset, checkpoints, temporary logs and abandoned campaigns stay
 local; small completed result files and figures are versioned.
+
+Week 4 scheduler implementation and verification are documented in
+[docs/week4_scheduler_verification.md](docs/week4_scheduler_verification.md).
 
 ## Current Local Assets
 

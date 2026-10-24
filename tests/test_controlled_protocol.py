@@ -1,5 +1,6 @@
 import unittest
 import json
+import math
 import tempfile
 from pathlib import Path
 from unittest.mock import patch
@@ -60,6 +61,73 @@ class ControlledProtocolTests(unittest.TestCase):
                         scheduler.step()
                     self.assertEqual(optimizer.param_groups[0]["momentum"], 0.9)
                     self.assertEqual(optimizer.param_groups[0]["weight_decay"], 5e-4)
+
+    def test_scheduler_lr_shapes_and_metadata(self):
+        expected = {
+            "constant": ("epoch", 0.1, 0.1, 0.1),
+            "step": ("epoch", 0.001, 0.1, 0.1),
+            "multistep": ("epoch", 0.001, 0.1, 0.1),
+            "cosine": ("epoch", 0.0, 0.1, 0.1),
+            "warmrestart": ("epoch", 0.0, 0.1, 0.1),
+            "cyclic": ("batch", 0.01, 0.1, 0.1),
+            "onecycle": ("batch", 0.1 / 25 / 10000, 0.1, 0.1),
+            "warmup_cosine": ("epoch", 0.0, 0.1, 0.1),
+        }
+        for name, (interval, low, high, initial) in expected.items():
+            with self.subTest(scheduler=name):
+                parameter = torch.nn.Parameter(torch.zeros(1))
+                optimizer = torch.optim.SGD([parameter], lr=0.1, momentum=0.9, weight_decay=5e-4)
+                scheduler, actual_interval, metadata = build_scheduler(name, optimizer, epochs=150, steps_per_epoch=352)
+                self.assertEqual(actual_interval, interval)
+                self.assertEqual(metadata["scheduler_name"], name)
+                self.assertAlmostEqual(metadata["max_lr"], high, places=10)
+                self.assertAlmostEqual(metadata["min_lr"], low, places=10)
+                self.assertAlmostEqual(metadata["initial_lr"], initial, places=10)
+                self.assertEqual(metadata["scheduler_step"], interval)
+
+    def test_scheduler_trace_boundaries(self):
+        for name in ("constant", "step", "multistep", "cosine", "warmrestart", "cyclic", "onecycle", "warmup_cosine"):
+            with self.subTest(scheduler=name):
+                optimizer = torch.optim.SGD([torch.nn.Parameter(torch.zeros(1))], lr=0.1)
+                scheduler, interval, _ = build_scheduler(name, optimizer, epochs=150, steps_per_epoch=352)
+                count = 150 * 352 if interval == "batch" else 150
+                trace = []
+                for _ in range(count):
+                    trace.append(optimizer.param_groups[0]["lr"])
+                    optimizer.step()
+                    if scheduler is not None:
+                        scheduler.step()
+                self.assertTrue(all(math.isfinite(lr) and lr >= 0 for lr in trace))
+                if name == "constant":
+                    self.assertTrue(all(lr == 0.1 for lr in trace))
+                elif name in ("step", "multistep"):
+                    drops = (50, 100) if name == "step" else (75, 112)
+                    for index, lr in enumerate(trace):
+                        self.assertAlmostEqual(lr, 0.1 * 0.1 ** sum(index >= d for d in drops))
+                elif name == "cosine":
+                    for index, lr in enumerate(trace):
+                        self.assertAlmostEqual(lr, 0.05 * (1 + math.cos(math.pi * index / 150)))
+                elif name == "warmrestart":
+                    for start, length, end in ((0, 37, 37), (37, 74, 111), (111, 148, 150)):
+                        for index in range(start, end):
+                            self.assertAlmostEqual(trace[index], 0.05 * (1 + math.cos(math.pi * (index - start) / length)))
+                elif name == "cyclic":
+                    self.assertAlmostEqual(trace[0], 0.01)
+                    self.assertAlmostEqual(trace[704], 0.1)
+                    self.assertAlmostEqual(trace[1408], 0.01)
+                    self.assertAlmostEqual(trace[2112], 0.055)
+                elif name == "onecycle":
+                    peak = int(count * 0.3) - 1
+                    self.assertAlmostEqual(trace[0], 0.004)
+                    self.assertAlmostEqual(trace[peak], 0.1)
+                    self.assertAlmostEqual(trace[-1], 4e-7)
+                    self.assertTrue(all(a <= b for a, b in zip(trace[:peak], trace[1:peak + 1])))
+                    self.assertTrue(all(a >= b for a, b in zip(trace[peak:-1], trace[peak + 1:])))
+                else:
+                    self.assertAlmostEqual(trace[0], 0.001)
+                    self.assertAlmostEqual(trace[7], 0.1)
+                    self.assertTrue(all(a <= b for a, b in zip(trace[:7], trace[1:8])))
+                    self.assertTrue(all(a >= b for a, b in zip(trace[7:-1], trace[8:])))
 
     @patch("train.datasets.CIFAR10", FakeCifar)
     def test_training_seed_does_not_change_split(self):

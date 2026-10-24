@@ -1,0 +1,73 @@
+{
+  "batch_size": 128,
+  "candidates": [
+    {
+      "id": "cyclic_original",
+      "options": {
+        "base_lr": 0.01
+      },
+      "pilot_epochs": 30,
+      "scheduler": "cyclic"
+    },
+    {
+      "id": "cyclic_lower_floor",
+      "options": {
+        "base_lr": 0.001
+      },
+      "pilot_epochs": 30,
+      "scheduler": "cyclic"
+    },
+    {
+      "id": "onecycle_original",
+      "options": {
+        "pct_start": 0.3
+      },
+      "pilot_epochs": 30,
+      "scheduler": "onecycle"
+    },
+    {
+      "id": "onecycle_shorter_rise",
+      "options": {
+        "pct_start": 0.1
+      },
+      "pilot_epochs": 30,
+      "scheduler": "onecycle"
+    },
+    {
+      "id": "warmrestart_original",
+      "options": {
+        "T_0": 37
+      },
+      "pilot_epochs": 150,
+      "scheduler": "warmrestart"
+    },
+    {
+      "id": "warmrestart_aligned",
+      "options": {
+        "T_0": 50
+      },
+      "pilot_epochs": 150,
+      "scheduler": "warmrestart"
+    }
+  ],
+  "data_dir": "F:\\Desktop\\FT5\\data",
+  "epochs_formal": 150,
+  "formal_seeds": [
+    1,
+    2,
+    3
+  ],
+  "momentum": 0.9,
+  "num_workers": 0,
+  "original_project": "F:\\Desktop\\FT5\\FT5-Learning-Rate",
+  "rationale": {
+    "cyclic": "10x lower floor tests late LR-floor limitation, max and cycle length fixed",
+    "onecycle": "10% vs 30% rise tests schedule allocation, max fixed",
+    "warmrestart": "50+100 epoch periods finish decay near budget end; compare with 37+74 then unfinished 148"
+  },
+  "selection": "Validation-only last-five-epoch mean; alternative needs >0.2pp improvement; close pairs get seed2; retain original if inconclusive.",
+  "split_seed": 1,
+  "split_sha256": "eaeb385c407962ceb057cbe0552bff8071a52d9b2c66a0c7432da30205174ad1",
+  "tuning_budget": "Targeted diagnostic; two candidates each; 30 epochs for batch schedules; 150 for restart comparison to cover original restarts. Unequal across families, equal within each pair. Extra seed2 only for close pairs.",
+  "weight_decay": 0.0005
+}

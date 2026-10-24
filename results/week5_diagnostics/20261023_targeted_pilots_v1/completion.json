@@ -1,0 +1,6 @@
+{
+  "limitation": "Targeted post-hoc diagnosis after prior test results were visible; tuning uses validation only. New CPU/GPU timing is not automatically comparable to historical timings.",
+  "new_formal_runs": 6,
+  "pilot_runs": 8,
+  "unchanged_strategies": "Reuse old parameter results; do not pool configurations."
+}

@@ -8,4 +8,9 @@ checkpoints/*.pt
 results/formal_150epoch/
 results/lr_pilots/20261016_105929*/
 **/finish_seed2.ps1
+**/process.json
+**/queue_stdout.log
+**/queue_stderr.log
+**/__pycache__/
+results/week5_diagnostics/**/preflight/
 
