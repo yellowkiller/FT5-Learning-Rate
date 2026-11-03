@@ -1,0 +1,15 @@
+{
+  "confirmation": [
+    6,
+    7,
+    8
+  ],
+  "note": "Reuse confirmation seeds for paired comparisons; none used to select Step/MultiStep settings.",
+  "targeted_only": [
+    9
+  ],
+  "tuning": [
+    4,
+    5
+  ]
+}

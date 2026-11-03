@@ -1,0 +1,4 @@
+[
+  "Cyclic paired validation seeds4/5/9: {'cyclic_floor0.01': [0.9312, 0.9262, 0.9276], 'cyclic_floor0.01_extension': [0.929, 0.931, 0.9312]}. Report direction and spread; no parent configuration is changed.",
+  "OneCycle incumbent comparison, validation seeds4/5: {'onecycle_lr0.1': [0.9548, 0.957], 'onecycle_lr0.03': [0.956, 0.9546]}. No test scores used for this choice."
+]

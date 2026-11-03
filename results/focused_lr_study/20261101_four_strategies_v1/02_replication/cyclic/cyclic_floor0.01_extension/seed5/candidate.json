@@ -1,0 +1,9 @@
+{
+  "id": "cyclic_floor0.01_extension",
+  "lr": 0.1,
+  "options": {
+    "base_lr": 0.01,
+    "step_size_up": 1760
+  },
+  "scheduler": "cyclic"
+}

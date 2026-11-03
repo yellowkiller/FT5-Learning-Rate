@@ -1,0 +1,9 @@
+{
+  "id": "warmrestart_T0_50_extension",
+  "lr": 0.1,
+  "options": {
+    "T_0": 50,
+    "T_mult": 1
+  },
+  "scheduler": "warmrestart"
+}

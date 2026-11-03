@@ -1,0 +1,8 @@
+{
+  "id": "onecycle_lr0.1",
+  "lr": 0.1,
+  "options": {
+    "pct_start": 0.3
+  },
+  "scheduler": "onecycle"
+}

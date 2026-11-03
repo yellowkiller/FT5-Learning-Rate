@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "campaigns": {
+    "20261101_four_strategies_v1": 35,
+    "20261101_conditional_followup_v1": 19,
+    "20261103_warmup_cosine_confirmation_v1": 3,
+    "20261103_constant_confirmation_v1": 3
+  },
+  "runs": 60,
+  "confirmation_runs": 24,
+  "epochs_per_run": 150,
+  "checks": [
+    "frozen_source_hashes",
+    "split_hashes",
+    "epoch_rows",
+    "optimizer_update_LRs",
+    "validation_only_tuning",
+    "best_and_last_checkpoints",
+    "plots"
+  ],
+  "scope": "File integrity audit only; no new training or test-set evaluation",
+  "limitations": "Unequal historical tuning budgets; previously inspected test set; mixed serial/shared-GPU timing"
+}

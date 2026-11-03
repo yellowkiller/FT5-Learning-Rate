@@ -1,0 +1,14 @@
+{
+  "id": "multistep_lr0.2",
+  "lr": 0.2,
+  "metadata": {
+    "initial_lr": 0.2,
+    "max_lr": 0.2,
+    "min_lr": 0.0020000000000000005,
+    "scheduler_name": "multistep",
+    "scheduler_params": "milestones=[75, 112];gamma=0.1",
+    "scheduler_step": "epoch"
+  },
+  "options": {},
+  "scheduler": "multistep"
+}

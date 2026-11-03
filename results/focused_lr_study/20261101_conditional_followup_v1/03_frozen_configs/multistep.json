@@ -1,0 +1,13 @@
+{
+  "paired_deltas": [
+    0.0010000000000000009,
+    -0.0011999999999999789
+  ],
+  "selected": {
+    "id": "multistep_lr0.1",
+    "lr": 0.1,
+    "options": {},
+    "scheduler": "multistep"
+  },
+  "uncertain": true
+}

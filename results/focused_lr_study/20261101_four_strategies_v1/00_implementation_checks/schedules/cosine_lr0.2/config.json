@@ -1,0 +1,14 @@
+{
+  "id": "cosine_lr0.2",
+  "lr": 0.2,
+  "metadata": {
+    "initial_lr": 0.2,
+    "max_lr": 0.2,
+    "min_lr": 0.0,
+    "scheduler_name": "cosine",
+    "scheduler_params": "T_max=150;eta_min=0.0",
+    "scheduler_step": "epoch"
+  },
+  "options": {},
+  "scheduler": "cosine"
+}

@@ -1,0 +1,5 @@
+scheduler,id,lr,options,uncertain
+cosine,cosine_lr0.1,0.1,{},True
+onecycle,onecycle_lr0.03,0.03,{'pct_start': 0.3},True
+cyclic,cyclic_floor0.01,0.1,"{'base_lr': 0.01, 'step_size_up': 704}",True
+warmrestart,warmrestart_T0_50,0.1,"{'T_0': 50, 'T_mult': 2}",True

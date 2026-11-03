@@ -1,0 +1,43 @@
+{
+  "accuracy_thresholds": [
+    0.9,
+    0.93,
+    0.94
+  ],
+  "confirmation_seeds": [
+    6,
+    7,
+    8
+  ],
+  "data_dir": "F:\\Desktop\\FT5\\data",
+  "epochs": 150,
+  "max_runs": 35,
+  "parallel_jobs": 2,
+  "previously_used_seeds": [
+    1,
+    2,
+    3
+  ],
+  "root": "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\focused_lr_study\\20261101_four_strategies_v1",
+  "scope": "Sequential one-factor search, unequal 5/6-run effort across policies; not equal-budget global optimization",
+  "selection": "Best validation accuracy; lower loss and earlier epoch break ties; paired mean <=0.2pp is practical uncertainty, not a significance test",
+  "source_sha256": {
+    "config.py": "145a49e4e101d4517bcb2299683758050cf7119be29b4fbb99f895e63c48d8d3",
+    "models/resnet.py": "bd8c605c33607bb130cb5988b16d663e9b0bff04114d16864f1b1b11373dd55f",
+    "schedulers.py": "739413c94dea3e4eab727f511dc4497fa3f772cf4137e79d9653894a4b292058",
+    "scripts/run_focused_lr_study.py": "8759424209e8e3e68672afb5167e869201b9f008875aa028146aec71f85f2e13",
+    "train.py": "035c903fd7118d33002c7336af92ffd2413c9efe86286637bdf2842bb57df260",
+    "utils/logger.py": "64988a8bfb319be79c2158b361edb6735a59308382ce4d780a20c3bfbd4fc8fb",
+    "utils/metrics.py": "a4cd9677161a67c7c5faee1dcb35c87bce3d768d954f748f7dfa0b71db556a60",
+    "utils/seed.py": "58e0976c03260610b9d3de528ac1c3ffd8a409bd4ffbd220ee9a1d286abb6516"
+  },
+  "split_sha256": "eaeb385c407962ceb057cbe0552bff8071a52d9b2c66a0c7432da30205174ad1",
+  "stability_window": 10,
+  "steps_per_epoch": 352,
+  "threshold_rationale": "Pre-registered CIFAR-10 milestones based on historical validation curves; not universal and no replacement after observing new results.",
+  "timing_scope": "Shared-GPU wall time is descriptive only",
+  "tuning_seeds": [
+    4,
+    5
+  ]
+}

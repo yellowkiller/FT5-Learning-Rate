@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "updates": 52800,
+  "first_lr": 0.1,
+  "constant_lr": 0.1,
+  "last_update_lr": 0.1
+}

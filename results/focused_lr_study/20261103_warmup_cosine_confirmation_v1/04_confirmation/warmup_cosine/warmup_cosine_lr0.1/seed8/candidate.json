@@ -1,0 +1,6 @@
+{
+  "id": "warmup_cosine_lr0.1",
+  "lr": 0.1,
+  "options": {},
+  "scheduler": "warmup_cosine"
+}

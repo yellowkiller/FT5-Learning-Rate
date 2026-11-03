@@ -1,0 +1,17 @@
+{
+  "paired_deltas": [
+    0.0023999999999999577,
+    0.0008000000000000229
+  ],
+  "reason": "Paired seed4/5 best-validation accuracy; <=0.2pp mean gap or opposing signs is uncertain; incumbent fallback when available, otherwise seed4 leader.",
+  "selected": {
+    "id": "warmrestart_T0_50",
+    "lr": 0.1,
+    "options": {
+      "T_0": 50,
+      "T_mult": 2
+    },
+    "scheduler": "warmrestart"
+  },
+  "uncertain": true
+}

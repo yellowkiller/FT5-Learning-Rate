@@ -1,0 +1,17 @@
+test_frozen_config_applies_scheduler_lr_and_allows_explicit_seed (test_controlled_protocol.ControlledProtocolTests.test_frozen_config_applies_scheduler_lr_and_allows_explicit_seed) ... ok
+test_momentum_and_weight_decay_remain_fixed_for_entire_schedule (test_controlled_protocol.ControlledProtocolTests.test_momentum_and_weight_decay_remain_fixed_for_entire_schedule) ... ok
+test_scheduler_lr_shapes_and_metadata (test_controlled_protocol.ControlledProtocolTests.test_scheduler_lr_shapes_and_metadata) ... ok
+test_scheduler_trace_boundaries (test_controlled_protocol.ControlledProtocolTests.test_scheduler_trace_boundaries) ... ok
+test_training_seed_does_not_change_split (test_controlled_protocol.ControlledProtocolTests.test_training_seed_does_not_change_split) ... ok
+test_validation_metrics_weight_batches_and_disable_gradients (test_controlled_protocol.ControlledProtocolTests.test_validation_metrics_weight_batches_and_disable_gradients) ... ok
+test_cyclic_lower_bound_and_fixed_momentum (test_diagnostic_options.DiagnosticOptionsTests.test_cyclic_lower_bound_and_fixed_momentum) ... ok
+test_onecycle_peak_and_reject_unknown_parameters (test_diagnostic_options.DiagnosticOptionsTests.test_onecycle_peak_and_reject_unknown_parameters) ... ok
+test_restart_cycle_completes_at_budget_boundary (test_diagnostic_options.DiagnosticOptionsTests.test_restart_cycle_completes_at_budget_boundary) ... ok
+test_checkpoint_ties_use_loss_then_earlier_epoch (test_focused_study.FocusedStudyTests.test_checkpoint_ties_use_loss_then_earlier_epoch) ... ok
+test_lr_log_records_updates_before_scheduler_step (test_focused_study.FocusedStudyTests.test_lr_log_records_updates_before_scheduler_step) ... ok
+test_nonfinite_loss_fails_instead_of_producing_results (test_focused_study.FocusedStudyTests.test_nonfinite_loss_fails_instead_of_producing_results) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 1.624s
+
+OK

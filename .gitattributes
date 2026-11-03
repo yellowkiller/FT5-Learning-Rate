@@ -1,2 +1,4 @@
 # Preserve exact Python bytes used by recorded source SHA256 values.
 *.py -text
+# Completed experiment artifacts are immutable provenance records.
+results/focused_lr_study/** -text

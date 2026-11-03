@@ -1,0 +1,66 @@
+{
+  "cosine": {
+    "paired_deltas": [
+      0.00039999999999995595,
+      0.0006000000000000449
+    ],
+    "reason": "Paired seed4/5 best-validation accuracy; <=0.2pp mean gap or opposing signs is uncertain; incumbent fallback when available, otherwise seed4 leader.",
+    "selected": {
+      "id": "cosine_lr0.1",
+      "lr": 0.1,
+      "options": {},
+      "scheduler": "cosine"
+    },
+    "uncertain": true
+  },
+  "cyclic": {
+    "paired_deltas": [
+      0.0021999999999999797,
+      -0.0048000000000000265
+    ],
+    "reason": "Paired seed4/5 best-validation accuracy; <=0.2pp mean gap or opposing signs is uncertain; incumbent fallback when available, otherwise seed4 leader.",
+    "selected": {
+      "id": "cyclic_floor0.01",
+      "lr": 0.1,
+      "options": {
+        "base_lr": 0.01,
+        "step_size_up": 704
+      },
+      "scheduler": "cyclic"
+    },
+    "uncertain": true
+  },
+  "onecycle": {
+    "paired_deltas": [
+      0.0010000000000000009,
+      0.0010000000000000009
+    ],
+    "reason": "Paired seed4/5 best-validation accuracy; <=0.2pp mean gap or opposing signs is uncertain; incumbent fallback when available, otherwise seed4 leader.",
+    "selected": {
+      "id": "onecycle_lr0.03",
+      "lr": 0.03,
+      "options": {
+        "pct_start": 0.3
+      },
+      "scheduler": "onecycle"
+    },
+    "uncertain": true
+  },
+  "warmrestart": {
+    "paired_deltas": [
+      0.0023999999999999577,
+      0.0008000000000000229
+    ],
+    "reason": "Paired seed4/5 best-validation accuracy; <=0.2pp mean gap or opposing signs is uncertain; incumbent fallback when available, otherwise seed4 leader.",
+    "selected": {
+      "id": "warmrestart_T0_50",
+      "lr": 0.1,
+      "options": {
+        "T_0": 50,
+        "T_mult": 2
+      },
+      "scheduler": "warmrestart"
+    },
+    "uncertain": true
+  }
+}

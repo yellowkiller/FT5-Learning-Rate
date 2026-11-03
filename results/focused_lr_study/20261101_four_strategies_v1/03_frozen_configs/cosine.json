@@ -1,0 +1,14 @@
+{
+  "paired_deltas": [
+    0.00039999999999995595,
+    0.0006000000000000449
+  ],
+  "reason": "Paired seed4/5 best-validation accuracy; <=0.2pp mean gap or opposing signs is uncertain; incumbent fallback when available, otherwise seed4 leader.",
+  "selected": {
+    "id": "cosine_lr0.1",
+    "lr": 0.1,
+    "options": {},
+    "scheduler": "cosine"
+  },
+  "uncertain": true
+}

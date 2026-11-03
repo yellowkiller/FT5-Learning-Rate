@@ -1,0 +1,17 @@
+{
+  "paired_deltas": [
+    0.0021999999999999797,
+    -0.0048000000000000265
+  ],
+  "reason": "Paired seed4/5 best-validation accuracy; <=0.2pp mean gap or opposing signs is uncertain; incumbent fallback when available, otherwise seed4 leader.",
+  "selected": {
+    "id": "cyclic_floor0.01",
+    "lr": 0.1,
+    "options": {
+      "base_lr": 0.01,
+      "step_size_up": 704
+    },
+    "scheduler": "cyclic"
+  },
+  "uncertain": true
+}

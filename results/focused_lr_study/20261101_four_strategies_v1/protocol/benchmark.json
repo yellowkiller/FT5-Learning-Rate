@@ -1,0 +1,10 @@
+{
+  "solo": {
+    "wall_seconds": 72.09965400000146,
+    "runs": 1
+  },
+  "parallel": {
+    "wall_seconds": 70.9010887000004,
+    "runs": 2
+  }
+}

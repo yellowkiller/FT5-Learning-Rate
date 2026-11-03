@@ -1,0 +1,6 @@
+{
+  "id": "constant_lr0.1",
+  "lr": 0.1,
+  "options": {},
+  "scheduler": "constant"
+}

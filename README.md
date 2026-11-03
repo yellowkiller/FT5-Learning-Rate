@@ -1,203 +1,89 @@
 # FT5 Learning Rate Strategy Study
 
-This repository is the clean experimental workspace for the FT-5 project:
+Controlled CIFAR-10 / ResNet-18 experiments comparing eight learning-rate policies with SGD.
 
-> Optimising Deep Learning Training with Learning Rate Strategies
+## Current results
 
-The project goal is to compare learning-rate strategies under controlled CIFAR-10
-training conditions. Keep the dataset, model, optimizer, augmentation, batch
-size, weight decay, and training budget fixed whenever possible so that the
-learning-rate policy is the main changing variable.
+The latest completed comparison has **eight policies × seeds 6/7/8 × 150 epochs**.
+All 60 runs in the four recent campaigns have passed a read-only integrity audit:
+36 tuning/replication/targeted-validation runs and 24 frozen-configuration confirmation runs.
 
-## Latest Week 5 Results
+- [Results index and stage definitions](results/README.md)
+- [All 60 runs](results/catalog/all_runs.csv)
+- [24 matched-seed confirmation runs](results/catalog/confirmation_per_seed.csv)
+- [Eight-policy means, sample SD and counts](results/catalog/confirmation_summary.csv)
+- [Audit report](results/catalog/audit.json)
+- [Artifact SHA-256 inventory](results/catalog/artifact_manifest.csv)
+- [Code cleanup and methodological limitations](docs/code_audit_20261103.md)
 
-The completed LR-range and targeted pilot campaign is recorded in
-`results/week5_diagnostics/20261023_targeted_pilots_v1/`. It contains eight
-validation-only pilot runs and six additional 150-epoch runs for the two
-strategies whose parameters changed. Original and new parameter versions remain
-separate in the comparison tables.
+These are controlled comparisons of the recorded configurations, **not a completed equal-tuning-budget study**.
+Historical search effort differs across policies. Test results have already been inspected;
+they must not drive further parameter/model selection. Historical shared-GPU times and the
+later serial times do not establish scheduler speedups. Three seeds give descriptive evidence,
+not universal rankings. The proposal's fair-budget study and secondary workload remain separate future work.
 
-Momentum is fixed at `0.9` and weight decay is fixed at `5e-4` in `config.py`.
-They are intentionally not exposed as command-line options for the main
-scheduler comparison.
+## Experimental protocol
 
-Protocol v2 explicitly disables momentum cycling in CyclicLR and OneCycleLR.
-Earlier results for those two methods used scheduler-controlled momentum and
-must not be pooled with v2 results. Training seeds vary model initialization,
-augmentation and sampling; `--split-seed 1` independently fixes the 45,000/5,000
-training/validation partition. Each run saves the split indices, split hash,
-source hash and per-epoch momentum alongside existing metrics.
+- Fixed CIFAR-10 split: 45,000 training / 5,000 validation / 10,000 official test; split seed 1.
+- CIFAR-adapted ResNet-18, SGD, momentum 0.9, weight decay 0.0005, batch size 128.
+- Constant LR, StepLR, MultiStepLR, Cosine, Warm Restarts, CyclicLR, OneCycleLR, Warm-up + Cosine.
+- CyclicLR and OneCycleLR use fixed momentum (`cycle_momentum=False`).
+- Recent protocol v3 logs every optimizer-update LR and uses validation accuracy,
+  lower validation loss, then earlier epoch for checkpoint selection.
+- Tuning/replication/targeted runs use `--validation-only`. After configuration freezing,
+  each confirmation run evaluates its validation-selected checkpoint once on the test set.
+- Stability: validation-accuracy sample SD over epochs 141–150. Convergence: first validation
+  crossings at 80%/90% (plus 93%/94% for compatibility), with missing thresholds and attainment counts.
+- Protocol versions and historical tuning results are kept separate; do not pool them into confirmation estimates.
 
-## Validation-Only Pilot And Frozen Configuration
+## Code layout
 
-```powershell
-python scripts/run_lr_pilot.py --pilot-epochs 3 --range-steps 704
-```
+| Location | Purpose |
+|---|---|
+| `train.py`, `test.py` | Training and explicit checkpoint evaluation |
+| `config.py`, `schedulers.py`, `models/`, `utils/` | Shared training implementation |
+| `scripts/run_focused_lr_study.py` | Original four-policy bounded search/confirmation |
+| `scripts/run_lr_followup.py` | Targeted validation plus StepLR/MultiStepLR |
+| `scripts/run_fixed_confirmation.py` | Shared fixed Constant / Warm-up + Cosine confirmation |
+| `scripts/run_constant_confirmation.py`, `scripts/run_warmup_confirmation.py` | Thin CLI compatibility entry points |
+| `scripts/audit_focused_results.py` | Read-only result checks and portable catalog |
+| Other `scripts/` | Historical pilots, smoke checks and reports; retained for reproducibility |
+| `tests/` | Training, scheduler, checkpoint and queue regression tests |
+| `results/` | Versioned metrics, configurations, frozen sources and figures |
 
-This runs a training-only exponential LR range test, then two equal-budget
-LR candidates per scheduler. Candidates bracket conservative values below the
-observed smoothed-loss minimum on a fixed grid. Every candidate uses the full
-training/validation split. Test accuracy is left empty during tuning.
-Selection uses final validation accuracy, then lower validation loss and LR.
-The three-epoch screen is economical and does not establish optimal long-run
-settings. Outputs are timestamped under `results/lr_pilots/`, including plots,
-pilot logs, source snapshots, selected settings and `formal_config.json`.
+Each campaign's `protocol/source_snapshot/` is immutable experimental provenance,
+not active duplicate code. Use it and its recorded hashes to reproduce historical runs.
+The cleaned active scripts apply to new roots. They do not migrate or rerun completed campaigns.
 
-After reviewing a completed pilot, reproduce a main run with its frozen file:
+## Setup and checks
 
-```powershell
-python train.py --config results/lr_pilots/<pilot-folder>/formal_config.json --scheduler cosine --seed 1 --run-name formal_v2 --output-dir results/formal_v2/cosine/seed1 --checkpoint-dir checkpoints/formal_v2/cosine/seed1
-```
-
-The frozen file sets the 150-epoch budget and selected scheduler LR. Repeat
-with seeds 2 and 3 and separate output directories. Explicit CLI arguments can
-override defaults and are recorded in metadata. Schedule durations scale with
-the chosen epoch budget; momentum and weight decay stay fixed. Run jobs
-sequentially on the same GPU for comparable timing. This command is documented
-for the next stage; the pilot script does not launch main experiments.
-
-## Completed Formal Comparison and Week 3 Report
-
-The protocol-v2 experiment completed all eight schedulers with seeds 1, 2 and 3
-for 150 epochs. The authoritative folder is
-`results/formal_multiseed/20261017_092528_epochs150_seeds1-3_fixedsplit_v2/`.
-Its `plots/README.md` indexes the per-seed figures; `week3_baseline/README.md`
-contains the fixed/StepLR report and checkpoint verification results.
-Meeting 02 deliverables and slides are kept outside this Git repository at
-`../meeting_submissions/meeting_02_reliable_baseline/`.
-
-Evaluate an existing local checkpoint without training (validation by default):
+Create the dedicated Conda environment from `environment.yml` or install `requirements.txt`
+in a compatible Python/CUDA environment. Per-campaign `protocol/environment.txt` records the
+actual dependencies; CPU-only audit of checkpoints still requires compatible PyTorch.
+CIFAR-10 data belongs outside this repository, conventionally at `../data`.
 
 ```powershell
-python test.py <checkpoint.pt> --split validation --data-dir ../data --device cuda
+python -m unittest discover -s tests -v
+python scripts/audit_focused_results.py
 ```
 
-Generate figures or regenerate the verified baseline report from saved runs:
+The audit reads existing files and local checkpoints; it performs no training or test-image evaluation.
+It writes only `results/catalog/`. It requires all four original local result directories and checkpoints.
+A GitHub checkout contains their metrics/configuration/source/figure records, but not checkpoint binaries.
 
-```powershell
-python scripts/plot_multiseed_results.py <experiment-directory>
-python scripts/report_week3_baseline.py <experiment-directory>
-```
+For an intentionally new training run, use `python train.py --help` and a **new output/checkpoint root**.
+Existing incomplete directories must be inspected rather than overwritten. Exact resume is not provided:
+last checkpoints store recovery state, but there is no validated resume CLI.
 
-Read [the code audit](docs/code_audit_meeting02.md) for review scope and remaining
-limitations. Dataset, checkpoints, temporary logs and abandoned campaigns stay
-local; small completed result files and figures are versioned.
+## Storage and history
 
-Week 4 scheduler implementation and verification are documented in
-[docs/week4_scheduler_verification.md](docs/week4_scheduler_verification.md).
+Git versions completed CSV/JSON results, LR logs, curves, frozen source snapshots and their environment records.
+Dataset binaries, all `.pt` checkpoints, runtime console logs, process records, lock files and Python caches
+stay local. The artifact manifest records the original paths, sizes and hashes, including local-only files.
+All original experiment directories are retained in place to preserve frozen metadata and absolute paths;
+new catalog tables use repository-relative directories for browsing on another machine.
 
-## Current Local Assets
-
-- Project plan PDF: `../FT5_Semester_Project_Plan_Wenjun_Huang.pdf`
-- Reading papers: `../reading_materials/`
-- CIFAR-10 archive and extracted data: `../data/`
-- Reference source snapshot: `../external/kuangliu-pytorch-cifar/`
-
-## Reference Source Code
-
-The PDF recommends `kuangliu/pytorch-cifar` as a starting baseline. It is a
-small PyTorch CIFAR training repository with common CNN architectures, including
-ResNet. In this project it should be treated as a reference implementation, not
-as the final experiment framework.
-
-Use it to understand a minimal CIFAR training loop, model definitions, transforms,
-checkpointing, and evaluation. Then adapt the useful parts into this repository
-with cleaner experiment logging and scheduler control.
-
-## Planned Structure
-
-```text
-FT5-Learning-Rate/
-  train.py
-  test.py
-  config.py
-  schedulers.py
-  models/
-    resnet.py
-  utils/
-    metrics.py
-    logger.py
-    seed.py
-  scripts/
-  results/
-  checkpoints/
-  plots/
-  configs/
-```
-
-## First Milestone
-
-Establish a reproducible CIFAR-10 + ResNet-18 baseline before comparing
-schedulers.
-
-Required first outputs:
-
-- Baseline training log
-- Train/validation loss curves
-- Train/validation accuracy curves
-- Learning-rate curve
-- Configuration and seed recorded for every run
-
-`results/results.csv` stores one row per completed run with experiment metadata.
-Each run also writes `results/<run_id>_metadata.json` and
-`results/<run_id>_epochs.csv`.
-
-## Environment
-
-This workspace uses a dedicated conda environment named `ft5-lr`, created with
-Miniconda from `E:\Miniconda3`.
-
-Create the environment from scratch:
-
-```powershell
-& 'E:\Miniconda3\Scripts\conda.exe' env create -f environment.yml
-```
-
-Run commands inside it:
-
-```powershell
-& 'E:\Miniconda3\Scripts\conda.exe' run -n ft5-lr python train.py --epochs 1 --device cuda
-```
-
-The current environment has been verified with CUDA-enabled PyTorch.
-
-## Useful Commands
-
-Export preview PNGs from CIFAR-10:
-
-```powershell
-& 'E:\Miniconda3\Scripts\conda.exe' run -n ft5-lr python scripts/export_cifar10_preview.py --data-dir ../data --output-dir ../data/cifar10_preview --per-class 10
-```
-
-Run a short smoke test:
-
-```powershell
-& 'E:\Miniconda3\Scripts\conda.exe' run -n ft5-lr python train.py --epochs 1 --batch-size 256 --scheduler constant --run-name smoke --seed 1 --num-workers 0 --device cuda
-```
-
-Plot curves from an epoch log:
-
-```powershell
-& 'E:\Miniconda3\Scripts\conda.exe' run -n ft5-lr python scripts/plot_training_curves.py results/smoke_constant_seed1_epochs.csv --output-dir plots
-```
-
-## Main Scheduler Candidates
-
-- Constant learning rate
-- StepLR or MultiStepLR
-- CosineAnnealingLR
-- CosineAnnealingWarmRestarts
-- CyclicLR
-- OneCycleLR
-- Optional: warm-up + cosine decay
-
-## Dataset Integrity
-
-The CIFAR-10 Python archive should have MD5:
-
-```text
-c58f30108f718f92721af3b95e74349a
-```
-
-The local downloaded copy has been checked against this value.
-
+Older protocol-v2 eight-policy seeds1/2/3 results, short LR pilots, Week5 targeted work and smoke checks
+are indexed separately in [results/README.md](results/README.md). V1 momentum-cycling results and abandoned
+campaigns must not be pooled with v2/v3. Meeting/proposal/PPT files live outside this repository and are
+not part of this cleanup or upload. Publication here does not alter historical experimental status.

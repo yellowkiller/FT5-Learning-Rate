@@ -1,0 +1,6 @@
+{
+  "id": "cosine_lr0.03",
+  "lr": 0.03,
+  "options": {},
+  "scheduler": "cosine"
+}

@@ -2,6 +2,9 @@ import argparse
 import csv
 import hashlib
 import json
+import math
+import os
+import random
 import subprocess
 import time
 from dataclasses import asdict
@@ -9,6 +12,7 @@ from datetime import datetime
 from pathlib import Path
 
 import torch
+import numpy as np
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, Subset
@@ -147,7 +151,8 @@ def build_loaders(config: ExperimentConfig) -> tuple[DataLoader, DataLoader, Dat
     return train_loader, val_loader, test_loader
 
 
-def run_epoch(model, loader, criterion, device, optimizer=None, scheduler=None, scheduler_step="epoch", quiet=False):
+def run_epoch(model, loader, criterion, device, optimizer=None, scheduler=None, scheduler_step="epoch", quiet=False,
+              lr_writer=None, epoch=0):
     is_train = optimizer is not None
     model.train(is_train)
     total_loss = 0.0
@@ -156,15 +161,22 @@ def run_epoch(model, loader, criterion, device, optimizer=None, scheduler=None, 
 
     context = torch.enable_grad() if is_train else torch.no_grad()
     with context:
-        for inputs, targets in tqdm(loader, leave=False, ascii=True, disable=quiet):
+        for batch, (inputs, targets) in enumerate(tqdm(loader, leave=False, ascii=True, disable=quiet), 1):
             inputs = inputs.to(device)
             targets = targets.to(device)
 
             if is_train:
                 optimizer.zero_grad(set_to_none=True)
+                if lr_writer is not None:
+                    lr_writer.writerow({"epoch": epoch, "batch": batch,
+                        "update": (epoch - 1) * len(loader) + batch,
+                        "lr": optimizer.param_groups[0]["lr"],
+                        "momentum": optimizer.param_groups[0]["momentum"]})
 
             outputs = model(inputs)
             loss = criterion(outputs, targets)
+            if not torch.isfinite(loss):
+                raise FloatingPointError(f"Nonfinite loss at epoch {epoch}, batch {batch}")
 
             if is_train:
                 loss.backward()
@@ -217,8 +229,14 @@ def write_json(path: Path, data: dict) -> None:
         json.dump(data, handle, indent=2, sort_keys=True)
 
 
+def better_checkpoint(acc, loss, best_acc, best_loss):
+    # Equal accuracy and loss retains the earlier epoch.
+    return acc > best_acc or (acc == best_acc and loss < best_loss)
+
+
 def main() -> None:
     config = parse_args()
+    torch.set_num_threads(int(os.environ.get("FT5_CPU_THREADS", "4")))
     set_seed(config.seed)
     device = select_device(config.device)
 
@@ -272,6 +290,8 @@ def main() -> None:
     )
 
     best_val_acc = -1.0
+    best_val_loss = float("inf")
+    best_epoch = 0
     final_val_acc = 0.0
     best_checkpoint = checkpoint_dir / f"{run_id}_best.pt"
     start_time = time.perf_counter()
@@ -296,12 +316,15 @@ def main() -> None:
         "split_seed": config.split_seed,
         "split_sha256": split_hash,
         "source_sha256": source_hash.hexdigest(),
-        "protocol_version": "fixed-momentum-fixed-split-v2",
+        "protocol_version": "fixed-momentum-fixed-split-v3",
         "train_size": train_size,
         "validation_size": validation_size,
         "test_size": test_size,
         "device": str(device),
+        "hardware": torch.cuda.get_device_name(device) if device.type == "cuda" else "cpu",
+        "cpu_threads": torch.get_num_threads(),
         "config": asdict(config),
+        "checkpoint_selection": "max validation accuracy, min validation loss, earlier epoch",
     }
     metadata_path = output_dir / f"{run_id}_metadata.json"
     write_json(metadata_path, metadata)
@@ -311,10 +334,18 @@ def main() -> None:
     for epoch in range(1, config.epochs + 1):
         epoch_start = time.perf_counter()
         current_lr = optimizer.param_groups[0]["lr"]
-        train_loss, train_acc = run_epoch(
-            model, train_loader, criterion, device, optimizer, scheduler, scheduler_step, config.quiet
-        )
+        lr_path = output_dir / f"{run_id}_lr_updates.csv"
+        with lr_path.open("w" if epoch == 1 else "a", newline="", encoding="utf-8") as lr_handle:
+            lr_writer = csv.DictWriter(lr_handle, fieldnames=["epoch", "batch", "update", "lr", "momentum"])
+            if epoch == 1:
+                lr_writer.writeheader()
+            train_loss, train_acc = run_epoch(
+                model, train_loader, criterion, device, optimizer, scheduler, scheduler_step, config.quiet,
+                lr_writer=lr_writer, epoch=epoch
+            )
         val_loss, val_acc = run_epoch(model, val_loader, criterion, device, quiet=config.quiet)
+        if not all(math.isfinite(x) for x in (train_loss, train_acc, val_loss, val_acc)):
+            raise FloatingPointError(f"Nonfinite metrics at epoch {epoch}")
         final_val_acc = val_acc
         if scheduler is not None and scheduler_step == "epoch":
             scheduler.step()
@@ -337,8 +368,10 @@ def main() -> None:
             f"lr={current_lr:.6f} train_acc={train_acc:.4f} val_acc={val_acc:.4f}"
         )
 
-        if val_acc > best_val_acc:
+        if better_checkpoint(val_acc, val_loss, best_val_acc, best_val_loss):
             best_val_acc = val_acc
+            best_val_loss = val_loss
+            best_epoch = epoch
             torch.save(
                 {
                     "model_state": model.state_dict(),
@@ -346,9 +379,23 @@ def main() -> None:
                     "metadata": metadata,
                     "epoch": epoch,
                     "best_val_acc": best_val_acc,
+                    "best_val_loss": best_val_loss,
                 },
                 best_checkpoint,
             )
+
+        if epoch % 10 == 0 or epoch == config.epochs:
+            last_checkpoint = checkpoint_dir / f"{run_id}_last.pt"
+            temporary_checkpoint = last_checkpoint.with_suffix(".tmp")
+            torch.save({"model_state": model.state_dict(), "optimizer_state": optimizer.state_dict(),
+                        "scheduler_state": scheduler.state_dict() if scheduler else None,
+                        "config": asdict(config), "metadata": metadata, "epoch": epoch,
+                        "best_val_acc": best_val_acc, "best_val_loss": best_val_loss,
+                        "best_epoch": best_epoch, "torch_rng_state": torch.get_rng_state(),
+                        "python_rng_state": random.getstate(), "numpy_rng_state": np.random.get_state(),
+                        "cuda_rng_state": torch.cuda.get_rng_state_all() if device.type == "cuda" else None},
+                       temporary_checkpoint)
+            temporary_checkpoint.replace(last_checkpoint)
 
     checkpoint = torch.load(best_checkpoint, map_location=device, weights_only=False)
     model.load_state_dict(checkpoint["model_state"])
@@ -379,8 +426,10 @@ def main() -> None:
             "split_seed": config.split_seed,
             "split_sha256": split_hash,
             "source_sha256": source_hash.hexdigest(),
-            "protocol_version": "fixed-momentum-fixed-split-v2",
+            "protocol_version": "fixed-momentum-fixed-split-v3",
             "best_val_acc": best_val_acc,
+            "best_val_loss": best_val_loss,
+            "best_epoch": best_epoch,
             "final_val_acc": final_val_acc,
             "test_loss": test_loss,
             "test_acc": test_acc,

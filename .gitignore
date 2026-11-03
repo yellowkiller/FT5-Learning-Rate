@@ -13,4 +13,6 @@ results/lr_pilots/20261016_105929*/
 **/queue_stderr.log
 **/__pycache__/
 results/week5_diagnostics/**/preflight/
+**/queue.lock
+**/checkpoints/*.tmp
 

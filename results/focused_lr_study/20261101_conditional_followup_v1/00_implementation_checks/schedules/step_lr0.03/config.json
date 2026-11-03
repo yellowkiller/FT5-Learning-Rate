@@ -1,0 +1,14 @@
+{
+  "id": "step_lr0.03",
+  "lr": 0.03,
+  "metadata": {
+    "initial_lr": 0.03,
+    "max_lr": 0.03,
+    "min_lr": 0.00030000000000000003,
+    "scheduler_name": "step",
+    "scheduler_params": "step_size=50;gamma=0.1",
+    "scheduler_step": "epoch"
+  },
+  "options": {},
+  "scheduler": "step"
+}
