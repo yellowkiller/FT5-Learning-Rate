@@ -1,0 +1,173 @@
+{
+  "locked_at": "2026-11-09T13:12:24.353350+00:00",
+  "models": [
+    {
+      "policy": "constant",
+      "seed": 16,
+      "directory": "runs/constant/seed16",
+      "sha256": "8fa2cf24b69f1b003741b3b2b5bb019cd51a49c1bc12a34a5d292c09e1e50589",
+      "best_epoch": 66
+    },
+    {
+      "policy": "step",
+      "seed": 16,
+      "directory": "runs/step/seed16",
+      "sha256": "4ab65c9df64068a058500160426c4d541b3816c9a6031d7133d07f67ca65db12",
+      "best_epoch": 144
+    },
+    {
+      "policy": "multistep",
+      "seed": 16,
+      "directory": "runs/multistep/seed16",
+      "sha256": "3b0defe6fa545fcb418dc8bc3cb03189cebcd2a387ce012d36c7570eb2acaeb7",
+      "best_epoch": 143
+    },
+    {
+      "policy": "cosine",
+      "seed": 16,
+      "directory": "runs/cosine/seed16",
+      "sha256": "756cc7d0dbb3804be3c9315a5b010246bd802c10e2feb2514b192f5a689255d2",
+      "best_epoch": 132
+    },
+    {
+      "policy": "warmrestart",
+      "seed": 16,
+      "directory": "runs/warmrestart/seed16",
+      "sha256": "f061b9208f788377b0dc6ee3360b85cdcb36d6d3fbf2cb1ee49a75de1492648d",
+      "best_epoch": 142
+    },
+    {
+      "policy": "warmup_cosine",
+      "seed": 16,
+      "directory": "runs/warmup_cosine/seed16",
+      "sha256": "3f12b2d29e179f0ba104d252626bd058137f075a907bfca82fcbfa0e64c3e534",
+      "best_epoch": 146
+    },
+    {
+      "policy": "cyclic",
+      "seed": 16,
+      "directory": "runs/cyclic/seed16",
+      "sha256": "fa01da924eb706d152e7af5091183d1afec3bf8ab9f05a834677583db87efbaf",
+      "best_epoch": 79
+    },
+    {
+      "policy": "onecycle",
+      "seed": 16,
+      "directory": "runs/onecycle/seed16",
+      "sha256": "04090d30ce77970542ac6f4a85f6fbcd0ccd049108052dee77aafe2a47e56e34",
+      "best_epoch": 147
+    },
+    {
+      "policy": "cosine",
+      "seed": 17,
+      "directory": "runs/cosine/seed17",
+      "sha256": "cc0e15dece8f0555f5d5995a6af26863a76728f9a5234492a2073ad7f9d736a1",
+      "best_epoch": 149
+    },
+    {
+      "policy": "warmrestart",
+      "seed": 17,
+      "directory": "runs/warmrestart/seed17",
+      "sha256": "9762cdc2c937f581b92521ed3590e01bdadbea51f7f1c59c0762d075cdd0a56e",
+      "best_epoch": 138
+    },
+    {
+      "policy": "warmup_cosine",
+      "seed": 17,
+      "directory": "runs/warmup_cosine/seed17",
+      "sha256": "b3f678c386771f389bcf63e328663fdfc2063a83fb95ef731a761a17db8caf2c",
+      "best_epoch": 149
+    },
+    {
+      "policy": "cyclic",
+      "seed": 17,
+      "directory": "runs/cyclic/seed17",
+      "sha256": "95c94dffcabfb6a689054699350805c096d9f5d76919c1c92225458c26b8fd2d",
+      "best_epoch": 131
+    },
+    {
+      "policy": "onecycle",
+      "seed": 17,
+      "directory": "runs/onecycle/seed17",
+      "sha256": "f8e26acbf9c6ee074fd5daa39b77178fc4a6618f442cb7a77fb92614a47bfdbd",
+      "best_epoch": 149
+    },
+    {
+      "policy": "constant",
+      "seed": 17,
+      "directory": "runs/constant/seed17",
+      "sha256": "2b037942eaee0f19dee5ba879a6aee98e157bf8a2993910b09246c6cdc0d36ef",
+      "best_epoch": 124
+    },
+    {
+      "policy": "step",
+      "seed": 17,
+      "directory": "runs/step/seed17",
+      "sha256": "9acad04b2b3b710d322dd16c68a92e568290777f4e2726fa46772165be9f0209",
+      "best_epoch": 127
+    },
+    {
+      "policy": "multistep",
+      "seed": 17,
+      "directory": "runs/multistep/seed17",
+      "sha256": "5cf87d0361f51c3768f9146bdfa9e7f94c08ead8f7061565dc70a02b426818d8",
+      "best_epoch": 134
+    },
+    {
+      "policy": "cyclic",
+      "seed": 18,
+      "directory": "runs/cyclic/seed18",
+      "sha256": "7bc5a2593f1ab2f847eb77c49bcbafbecca275d93c920930e08bf30123114114",
+      "best_epoch": 50
+    },
+    {
+      "policy": "onecycle",
+      "seed": 18,
+      "directory": "runs/onecycle/seed18",
+      "sha256": "854e5c6bb82cf0db5541f33967bdf121cde13723818c2f3b428a2a4c8b9d444b",
+      "best_epoch": 141
+    },
+    {
+      "policy": "constant",
+      "seed": 18,
+      "directory": "runs/constant/seed18",
+      "sha256": "8617b35af103f8c04509cc4f10e5b6e4ef297577bc585da91fdc95c8168afde8",
+      "best_epoch": 75
+    },
+    {
+      "policy": "step",
+      "seed": 18,
+      "directory": "runs/step/seed18",
+      "sha256": "037a73548491c72af27500e0bdee6067f1154a81a5e65187c39d39f25d20ebb6",
+      "best_epoch": 149
+    },
+    {
+      "policy": "multistep",
+      "seed": 18,
+      "directory": "runs/multistep/seed18",
+      "sha256": "bbb6a562838b923b91b629cafdd00c72ebcd7c6a86adb546283835ed250c828f",
+      "best_epoch": 141
+    },
+    {
+      "policy": "cosine",
+      "seed": 18,
+      "directory": "runs/cosine/seed18",
+      "sha256": "e49af9d2344e2952c8a6123ab52690a1a4a7fa162353900d59933c22cce0e5f8",
+      "best_epoch": 141
+    },
+    {
+      "policy": "warmrestart",
+      "seed": 18,
+      "directory": "runs/warmrestart/seed18",
+      "sha256": "ef9015e47044590db31a2f2e30113155df3a71f44b7e96ae2ee54a6fd47af8e4",
+      "best_epoch": 147
+    },
+    {
+      "policy": "warmup_cosine",
+      "seed": 18,
+      "directory": "runs/warmup_cosine/seed18",
+      "sha256": "a457a113a321b1efad6eab813165040570e3031add5966d7cb9dcdc883163cd4",
+      "best_epoch": 150
+    }
+  ]
+}

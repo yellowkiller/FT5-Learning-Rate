@@ -16,3 +16,14 @@ results/week5_diagnostics/**/preflight/
 **/queue.lock
 **/checkpoints/*.tmp
 
+# Checkpoints and runtime state outside the original checkpoints/ layout.
+*.pt
+*.queue.lock
+**/last.tmp
+**/process_before_resume.json
+**/monitor_process_before_resume.json
+**/monitor/
+
+# Abandoned download attempt: preserved locally, no training results.
+results/secondary_validation/20261108_cifar100_frozen_v1/
+

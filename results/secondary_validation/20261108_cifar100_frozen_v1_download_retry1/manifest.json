@@ -1,0 +1,307 @@
+{
+  "protocol": "secondary-cifar100-frozen-v1",
+  "frozen_at": "2026-11-08T03:23:29.629959+00:00",
+  "data_dir": "F:\\Desktop\\FT5\\data",
+  "policies": {
+    "constant": {
+      "lr": 0.1,
+      "options": {}
+    },
+    "step": {
+      "lr": 0.1,
+      "options": {}
+    },
+    "multistep": {
+      "lr": 0.1,
+      "options": {}
+    },
+    "cosine": {
+      "lr": 0.1,
+      "options": {}
+    },
+    "warmrestart": {
+      "lr": 0.1,
+      "options": {
+        "T_0": 50,
+        "T_mult": 2
+      }
+    },
+    "warmup_cosine": {
+      "lr": 0.1,
+      "options": {}
+    },
+    "cyclic": {
+      "lr": 0.1,
+      "options": {
+        "base_lr": 0.01,
+        "step_size_up": 704
+      }
+    },
+    "onecycle": {
+      "lr": 0.03,
+      "options": {
+        "pct_start": 0.3
+      }
+    }
+  },
+  "matrix": [
+    {
+      "order": "1",
+      "seed": "16",
+      "scheduler": "constant",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "2",
+      "seed": "16",
+      "scheduler": "step",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "3",
+      "seed": "16",
+      "scheduler": "multistep",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "4",
+      "seed": "16",
+      "scheduler": "cosine",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "5",
+      "seed": "16",
+      "scheduler": "warmrestart",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "6",
+      "seed": "16",
+      "scheduler": "warmup_cosine",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "7",
+      "seed": "16",
+      "scheduler": "cyclic",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "8",
+      "seed": "16",
+      "scheduler": "onecycle",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "9",
+      "seed": "17",
+      "scheduler": "cosine",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "10",
+      "seed": "17",
+      "scheduler": "warmrestart",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "11",
+      "seed": "17",
+      "scheduler": "warmup_cosine",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "12",
+      "seed": "17",
+      "scheduler": "cyclic",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "13",
+      "seed": "17",
+      "scheduler": "onecycle",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "14",
+      "seed": "17",
+      "scheduler": "constant",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "15",
+      "seed": "17",
+      "scheduler": "step",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "16",
+      "seed": "17",
+      "scheduler": "multistep",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "17",
+      "seed": "18",
+      "scheduler": "cyclic",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "18",
+      "seed": "18",
+      "scheduler": "onecycle",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "19",
+      "seed": "18",
+      "scheduler": "constant",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "20",
+      "seed": "18",
+      "scheduler": "step",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "21",
+      "seed": "18",
+      "scheduler": "multistep",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "22",
+      "seed": "18",
+      "scheduler": "cosine",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "23",
+      "seed": "18",
+      "scheduler": "warmrestart",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "24",
+      "seed": "18",
+      "scheduler": "warmup_cosine",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    }
+  ],
+  "source_hashes": {
+    "scripts/run_secondary_cifar100.py": "893da6932dec0d4994adc6d02949a7003f38ca397029b52bb397f0318ebaef96",
+    "train.py": "035c903fd7118d33002c7336af92ffd2413c9efe86286637bdf2842bb57df260",
+    "config.py": "145a49e4e101d4517bcb2299683758050cf7119be29b4fbb99f895e63c48d8d3",
+    "schedulers.py": "739413c94dea3e4eab727f511dc4497fa3f772cf4137e79d9653894a4b292058",
+    "models/resnet.py": "bd8c605c33607bb130cb5988b16d663e9b0bff04114d16864f1b1b11373dd55f",
+    "utils/seed.py": "58e0976c03260610b9d3de528ac1c3ffd8a409bd4ffbd220ee9a1d286abb6516",
+    "utils/metrics.py": "a4cd9677161a67c7c5faee1dcb35c87bce3d768d954f748f7dfa0b71db556a60",
+    "utils/logger.py": "64988a8bfb319be79c2158b361edb6735a59308382ce4d780a20c3bfbd4fc8fb"
+  },
+  "split_sha256": "68d62c83549784594ffa41fd1733c20481cff81fe027d4bc34ea45f0605ef6b4",
+  "normalization_sha256": "345a6b13f4cfb8ab0b9b5a0c246a1316095633bc2f94d901003308a57c91832e",
+  "torch": "2.14.1+cu132",
+  "torchvision": "0.29.1+cu132",
+  "python": "3.11.17 | packaged by conda-forge | (main, Oct  6 2026, 23:51:21) [MSC v.1944 64 bit (AMD64)]",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU",
+  "timing": "single process, synchronized first batch to final validation/checkpoint I/O",
+  "test_gate": "all 24 validation-only runs audited and checkpoint hashes locked before test"
+}

@@ -1,0 +1,14 @@
+{
+  "policy": "multistep",
+  "seed": 18,
+  "epochs": 150,
+  "best_epoch": 141,
+  "best_val_acc": 0.7738,
+  "best_val_loss": 0.9468698040008545,
+  "final_val_acc": 0.7728,
+  "training_time_seconds": 3692.5134748999844,
+  "finished_at": "2026-11-09T10:07:29.729368+00:00",
+  "best_sha256": "bbb6a562838b923b91b629cafdd00c72ebcd7c6a86adb546283835ed250c828f",
+  "last_sha256": "6fa6ef6bb57ca8ee25333b96e200e370c955d1cf1421ebeeb1c9d99e4f597178",
+  "test_acc": null
+}

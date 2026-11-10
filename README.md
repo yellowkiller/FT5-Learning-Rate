@@ -1,10 +1,10 @@
 # FT5 Learning Rate Strategy Study
 
-Controlled CIFAR-10 / ResNet-18 experiments comparing eight learning-rate policies with SGD.
+Controlled CIFAR-10 and CIFAR-100 / ResNet-18 experiments comparing eight learning-rate policies with SGD.
 
 ## Current results
 
-The latest completed comparison has **eight policies × seeds 6/7/8 × 150 epochs**.
+The primary comparison has **eight policies × seeds 6/7/8 × 150 epochs** on CIFAR-10.
 All 60 runs in the four recent campaigns have passed a read-only integrity audit:
 36 tuning/replication/targeted-validation runs and 24 frozen-configuration confirmation runs.
 
@@ -16,11 +16,23 @@ All 60 runs in the four recent campaigns have passed a read-only integrity audit
 - [Artifact SHA-256 inventory](results/catalog/artifact_manifest.csv)
 - [Code cleanup and methodological limitations](docs/code_audit_20261103.md)
 
+The secondary CIFAR-100 comparison is also **complete: eight unchanged configurations ×
+seeds 16/17/18 × 150 epochs**. Every model was trained from scratch with a 100-class head.
+All 24 validation-selected checkpoints were locked before the final test stage.
+
+- [Secondary results and interpretation](results/secondary_validation/README.md)
+- [24 secondary per-seed records](results/secondary_validation/20261108_cifar100_frozen_v1_download_retry1/summary/per_seed.csv)
+- [Eight-policy secondary summary](results/secondary_validation/20261108_cifar100_frozen_v1_download_retry1/summary/summary.csv)
+- [Independent saved-result audit](results/secondary_validation/catalog/audit.json)
+- [Secondary artifact inventory](results/secondary_validation/catalog/artifact_manifest.csv)
+- [Current maintenance and presentation audit](docs/code_and_presentation_audit_20261110.md)
+
 These are controlled comparisons of the recorded configurations, **not a completed equal-tuning-budget study**.
 Historical search effort differs across policies. Test results have already been inspected;
 they must not drive further parameter/model selection. Historical shared-GPU times and the
 later serial times do not establish scheduler speedups. Three seeds give descriptive evidence,
-not universal rankings. The proposal's fair-budget study and secondary workload remain separate future work.
+not universal rankings. The secondary transfer check is complete; the historical tuning-budget
+imbalance remains a limitation. No secondary result was used to retune the primary configurations.
 
 ## Experimental protocol
 
@@ -47,6 +59,10 @@ not universal rankings. The proposal's fair-budget study and secondary workload 
 | `scripts/run_fixed_confirmation.py` | Shared fixed Constant / Warm-up + Cosine confirmation |
 | `scripts/run_constant_confirmation.py`, `scripts/run_warmup_confirmation.py` | Thin CLI compatibility entry points |
 | `scripts/audit_focused_results.py` | Read-only result checks and portable catalog |
+| `scripts/run_secondary_cifar100.py` | Fixed CIFAR-100 campaign with a test gate after all 24 runs |
+| `scripts/audit_secondary_results.py` | Recompute saved secondary metrics, LR formulas, hashes and test-gate chronology |
+| `scripts/monitor_secondary_cifar100.py` | Windows local watchdog, hourly by default; no automatic restart |
+| `scripts/fetch_cifar100_archive.py` | Optional checksum-verified repair of a truncated dataset download |
 | Other `scripts/` | Historical pilots, smoke checks and reports; retained for reproducibility |
 | `tests/` | Training, scheduler, checkpoint and queue regression tests |
 | `results/` | Versioned metrics, configurations, frozen sources and figures |
@@ -60,11 +76,14 @@ The cleaned active scripts apply to new roots. They do not migrate or rerun comp
 Create the dedicated Conda environment from `environment.yml` or install `requirements.txt`
 in a compatible Python/CUDA environment. Per-campaign `protocol/environment.txt` records the
 actual dependencies; CPU-only audit of checkpoints still requires compatible PyTorch.
-CIFAR-10 data belongs outside this repository, conventionally at `../data`.
+Dataset binaries belong outside this repository, conventionally at `../data`.
 
 ```powershell
 python -m unittest discover -s tests -v
 python scripts/audit_focused_results.py
+python scripts/audit_secondary_results.py
+# On the original machine, additionally verify all 48 final checkpoint binaries:
+python scripts/audit_secondary_results.py --verify-local-checkpoints
 ```
 
 The audit reads existing files and local checkpoints; it performs no training or test-image evaluation.
@@ -72,8 +91,12 @@ It writes only `results/catalog/`. It requires all four original local result di
 A GitHub checkout contains their metrics/configuration/source/figure records, but not checkpoint binaries.
 
 For an intentionally new training run, use `python train.py --help` and a **new output/checkpoint root**.
-Existing incomplete directories must be inspected rather than overwritten. Exact resume is not provided:
-last checkpoints store recovery state, but there is no validated resume CLI.
+Existing incomplete directories must be inspected rather than overwritten. The generic training
+CLI does not provide checkpoint continuation. The recorded OneCycle/seed17 interruption has a
+separate dated recovery source under its campaign's `protocol/recovery_20261109_source/`.
+That recovery is specific to the preserved epoch-30 state, not a general resume command.
+Its timing is segmented and excludes the pause; the CPU continuation regression does not
+establish bitwise equivalence of the complete CIFAR/CUDA experiment.
 
 ## Storage and history
 
@@ -86,4 +109,5 @@ new catalog tables use repository-relative directories for browsing on another m
 Older protocol-v2 eight-policy seeds1/2/3 results, short LR pilots, Week5 targeted work and smoke checks
 are indexed separately in [results/README.md](results/README.md). V1 momentum-cycling results and abandoned
 campaigns must not be pooled with v2/v3. Meeting/proposal/PPT files live outside this repository and are
-not part of this cleanup or upload. Publication here does not alter historical experimental status.
+not uploaded with the code/results update. The latest deck is audited separately in the maintenance
+report. Publication here does not alter historical experimental status.

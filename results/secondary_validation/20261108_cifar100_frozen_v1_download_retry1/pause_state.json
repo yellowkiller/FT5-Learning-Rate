@@ -1,0 +1,157 @@
+{
+  "paused_at": "2026-11-08T14:30:25.693029+00:00",
+  "reason": "User requested stop after current run",
+  "completed": 12,
+  "total": 24,
+  "remaining_configurations": [
+    {
+      "order": "13",
+      "seed": "17",
+      "scheduler": "onecycle",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "14",
+      "seed": "17",
+      "scheduler": "constant",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "15",
+      "seed": "17",
+      "scheduler": "step",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "16",
+      "seed": "17",
+      "scheduler": "multistep",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "17",
+      "seed": "18",
+      "scheduler": "cyclic",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "18",
+      "seed": "18",
+      "scheduler": "onecycle",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "19",
+      "seed": "18",
+      "scheduler": "constant",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "20",
+      "seed": "18",
+      "scheduler": "step",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "21",
+      "seed": "18",
+      "scheduler": "multistep",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "22",
+      "seed": "18",
+      "scheduler": "cosine",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "23",
+      "seed": "18",
+      "scheduler": "warmrestart",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    },
+    {
+      "order": "24",
+      "seed": "18",
+      "scheduler": "warmup_cosine",
+      "epochs": "150",
+      "batch_size": "128",
+      "updates_per_epoch": "352",
+      "total_updates": "52800",
+      "test_during_training": "False"
+    }
+  ],
+  "partial_runs_preserved": [
+    {
+      "policy": "onecycle",
+      "seed": 17,
+      "directory": "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\secondary_validation\\20261108_cifar100_frozen_v1_download_retry1\\runs\\onecycle\\seed17",
+      "epoch_rows": 31,
+      "last_logged_epoch": 31,
+      "checkpoints": {
+        "best.pt": {
+          "epoch": 29,
+          "sha256": "b97b41ecb956d2a1220b9ae677a1c079ef74ab32aa84526d768fbc28745037ce",
+          "optimizer_state_saved": false,
+          "rng_state_saved": false
+        },
+        "last.pt": {
+          "epoch": 30,
+          "sha256": "d0fff5a787d8dd92b12a64bce030365cfea17afad3b2ba15a5f63bacb35abb9b",
+          "optimizer_state_saved": true,
+          "rng_state_saved": true
+        }
+      },
+      "resume_constraint": "Preserved incomplete run. Existing --resume refuses this directory. Any future checkpoint continuation needs an explicit versioned recovery implementation; do not overwrite or silently restart. Epoch CSV can extend past the latest full-state checkpoint."
+    }
+  ],
+  "test_evaluations": 0,
+  "target_run_completed": "cyclic/seed17",
+  "training_and_queue_stopped": true,
+  "frozen_manifest_sha256": "37fe9798f868ea02c705bafa4b187eab2fdc2ecc2be874cb7e983ad3a806f067",
+  "protocol_and_training_source_unchanged": true
+}

@@ -3,7 +3,7 @@
 Original directories remain in place. Classification is provided by this index and
 `catalog/all_runs.csv`, rather than moving records referenced by frozen metadata.
 
-## Latest protocol-v3 study
+## Primary protocol-v3 study (CIFAR-10)
 
 | Campaign | Category | Runs | Confirmation |
 |---|---|---:|---:|
@@ -37,6 +37,13 @@ Convergence uses validation thresholds only. Missing crossings are not zero; mea
 crossing metrics describe attaining seeds only, so always read the associated count.
 Do not combine tuning, targeted-validation or older-version runs into confirmation means.
 
+## Completed secondary validation (CIFAR-100)
+
+The [secondary index](secondary_validation/README.md) covers eight unchanged configurations,
+new matched seeds 16/17/18 and 24 full 150-epoch runs. All selected checkpoints were locked
+before any final test evaluation. It is a transfer check with one additional dataset,
+not a new hyperparameter search. Its per-seed and aggregate results remain separate from CIFAR-10.
+
 ## Historical and exploratory material
 
 | Folder | Status |
@@ -53,10 +60,11 @@ The latest tables compare recorded configurations; **historical tuning budgets a
 They do not establish a proposal-compliant equal-search-budget final study. The test set
 has previously been inspected; no further decisions may use test rankings. Shared-GPU
 and serial wall times are not a controlled speed benchmark. Three seeds support limited,
-descriptive comparisons only. Secondary CIFAR-100 transfer and the planned fair-budget
-protocol are not represented as completed here.
+descriptive comparisons only. CIFAR-100 transfer is complete; a historical equal-budget
+tuning comparison has not been retroactively performed.
 
 Checkpoints and runtime logs remain on the original computer; dataset/checkpoint binaries
 are not uploaded to Git. Historical absolute paths and historic "no GitHub upload" notes in
 frozen files are retained as records, not rewritten. This upload follows the user's later
-explicit instruction. No proposal, slide or frozen experimental file was changed.
+explicit instruction. Frozen experimental files are preserved; the local meeting deck is
+reviewed separately and the proposal is outside this code/results upload.

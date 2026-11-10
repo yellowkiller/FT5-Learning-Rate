@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "train_batches": 4,
+  "validation_batches": 1,
+  "implementation_seed": 16000,
+  "test_accessed": false,
+  "candidate_selection": false
+}

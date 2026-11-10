@@ -1,0 +1,36 @@
+{
+  "phase": "paused",
+  "completed": 12,
+  "total": 24,
+  "updated_at": "2026-11-08T14:30:25.693029+00:00",
+  "reason": "User requested stop after current run",
+  "partial_runs": [
+    {
+      "policy": "onecycle",
+      "seed": 17,
+      "directory": "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\secondary_validation\\20261108_cifar100_frozen_v1_download_retry1\\runs\\onecycle\\seed17",
+      "epoch_rows": 31,
+      "last_logged_epoch": 31,
+      "checkpoints": {
+        "best.pt": {
+          "epoch": 29,
+          "sha256": "b97b41ecb956d2a1220b9ae677a1c079ef74ab32aa84526d768fbc28745037ce",
+          "optimizer_state_saved": false,
+          "rng_state_saved": false
+        },
+        "last.pt": {
+          "epoch": 30,
+          "sha256": "d0fff5a787d8dd92b12a64bce030365cfea17afad3b2ba15a5f63bacb35abb9b",
+          "optimizer_state_saved": true,
+          "rng_state_saved": true
+        }
+      },
+      "resume_constraint": "Preserved incomplete run. Existing --resume refuses this directory. Any future checkpoint continuation needs an explicit versioned recovery implementation; do not overwrite or silently restart. Epoch CSV can extend past the latest full-state checkpoint."
+    }
+  ],
+  "target_run_completed": "cyclic/seed17",
+  "next_policy": "onecycle",
+  "next_seed": 17,
+  "test_evaluations": 0,
+  "pause_state": "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\secondary_validation\\20261108_cifar100_frozen_v1_download_retry1\\pause_state.json"
+}

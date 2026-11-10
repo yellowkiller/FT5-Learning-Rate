@@ -1,0 +1,11 @@
+{
+  "url": "https://storage.googleapis.com/tensorflow/tf-keras-datasets/cifar-100-python.tar.gz",
+  "bytes": 169001437,
+  "official_md5": "eb9058c3a382ffc7106e4002c42a8d85",
+  "verified": true,
+  "replaced_incomplete_archive": {
+    "bytes": 20854272,
+    "sha256": "19f10c567d37bc780de97680035401abfa572ce3f9da39313881900054b290c6"
+  },
+  "elapsed_seconds": 103.57800000000861
+}

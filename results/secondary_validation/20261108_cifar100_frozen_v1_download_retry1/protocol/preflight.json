@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-11-08T03:23:22.787711+00:00",
+  "analytic_schedule_max_errors": {
+    "constant": 0.0,
+    "step": 0.0,
+    "multistep": 0.0,
+    "cosine": 4.163336342344337e-17,
+    "warmrestart": 0.0,
+    "warmup_cosine": 4.163336342344337e-17,
+    "cyclic": 4.163336342344337e-17,
+    "onecycle": 6.938893903907228e-18
+  },
+  "logits_shape": [
+    4,
+    100
+  ],
+  "finite_backward_loss": 4.583615303039551,
+  "checkpoint_tie_checks": "pass",
+  "test_data_accessed": false
+}

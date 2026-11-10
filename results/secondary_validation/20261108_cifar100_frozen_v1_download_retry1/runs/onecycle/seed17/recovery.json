@@ -1,0 +1,23 @@
+{
+  "protocol": "checkpoint-continuation-v1",
+  "started_at": "2026-11-09T01:11:13.856090+00:00",
+  "policy": "onecycle",
+  "seed": 17,
+  "checkpoint_epoch": 30,
+  "first_resumed_epoch": 31,
+  "checkpoint_sha256": "d0fff5a787d8dd92b12a64bce030365cfea17afad3b2ba15a5f63bacb35abb9b",
+  "backup": "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\secondary_validation\\20261108_cifar100_frozen_v1_download_retry1\\recovery_20261109\\onecycle_seed17_before_resume",
+  "backup_hashes": {
+    "best.pt": "b97b41ecb956d2a1220b9ae677a1c079ef74ab32aa84526d768fbc28745037ce",
+    "epochs.csv": "c06c0cee1eb19644f3b65065a46240774adfa38f612ecdfb314946a94f6133cf",
+    "last.pt": "d0fff5a787d8dd92b12a64bce030365cfea17afad3b2ba15a5f63bacb35abb9b",
+    "lr_updates.csv": "81902685ff3d364cf8b9ca045dfde3fd61a39e072ba676b3c455aa4c1c175d29",
+    "metadata.json": "a8fc97537833ecfd40b021c744db5267c8ac122c97ba651357947ab9c5a013d7"
+  },
+  "recovery_script": "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\secondary_validation\\20261108_cifar100_frozen_v1_download_retry1\\protocol\\recovery_20261109_source\\run_secondary_cifar100_recovery.py",
+  "recovery_script_sha256": "e9166469d9dc27d89cb5f8ffbea6d9efc8e852b168fdcf8cc1ff49b37388e44b",
+  "original_source_unchanged": true,
+  "test_evaluation": false,
+  "timing": "sum of saved epochs1-30 plus resumed active time; pause excluded",
+  "comparison_limit": "resumed execution is segmented; do not claim uninterrupted wall-clock equivalence"
+}

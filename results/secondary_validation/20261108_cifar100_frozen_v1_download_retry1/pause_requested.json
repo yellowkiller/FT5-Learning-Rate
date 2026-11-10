@@ -1,0 +1,27 @@
+{
+  "requested_at": "2026-11-08T14:28:59.5107814Z",
+  "reason": "User requested stop after run active at request",
+  "target_completed_run": "cyclic/seed17",
+  "original_queue_status": {
+    "phase": "training",
+    "completed": 12,
+    "total": 24,
+    "current_policy": "onecycle",
+    "seed": 17,
+    "training_pid": 20808,
+    "command": [
+      "C:\\Users\\yellowkiller\\.conda\\envs\\ft5-lr\\python.exe",
+      "-u",
+      "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\secondary_validation\\20261108_cifar100_frozen_v1_download_retry1\\protocol\\source_snapshot\\scripts\\run_secondary_cifar100.py",
+      "--root",
+      "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\secondary_validation\\20261108_cifar100_frozen_v1_download_retry1",
+      "--run",
+      "onecycle",
+      "--seed",
+      "17"
+    ],
+    "log": "F:\\Desktop\\FT5\\FT5-Learning-Rate\\results\\secondary_validation\\20261108_cifar100_frozen_v1_download_retry1\\logs\\13_onecycle_seed17.log",
+    "updated_at": "2026-11-08T22:18:59.156742+08:00"
+  },
+  "note": "Cyclic finished during stop setup; next onecycle seed17 was stopped and all partial artifacts retained. No automatic restart."
+}

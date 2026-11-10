@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "campaign": "results/secondary_validation/20261108_cifar100_frozen_v1_download_retry1",
+  "training_runs": 24,
+  "test_records": 24,
+  "epoch_rows": 3600,
+  "lr_update_rows": 1267200,
+  "local_checkpoints_verified": 48,
+  "checkpoint_verification_requested": true,
+  "source_hashes_verified": true,
+  "split_and_normalization_verified": true,
+  "validation_selection_and_test_gate_verified": true,
+  "all_saved_summary_values_recomputed": true,
+  "analytic_lr_max_abs_error": {
+    "constant": 0.0,
+    "step": 0.0,
+    "multistep": 0.0,
+    "cosine": 4.163336342344337e-17,
+    "warmrestart": 0.0,
+    "warmup_cosine": 4.163336342344337e-17,
+    "cyclic": 4.163336342344337e-17,
+    "onecycle": 6.938893903907228e-18
+  },
+  "training_or_test_image_evaluation_performed": false
+}

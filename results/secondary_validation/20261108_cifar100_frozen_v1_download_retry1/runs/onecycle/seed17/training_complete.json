@@ -1,0 +1,19 @@
+{
+  "policy": "onecycle",
+  "seed": 17,
+  "epochs": 150,
+  "best_epoch": 149,
+  "best_val_acc": 0.7746,
+  "best_val_loss": 0.9275461327552795,
+  "final_val_acc": 0.77,
+  "training_time_seconds": 2970.66867369978,
+  "finished_at": "2026-11-09T01:51:17.451590+00:00",
+  "best_sha256": "f8e26acbf9c6ee074fd5daa39b77178fc4a6618f442cb7a77fb92614a47bfdbd",
+  "last_sha256": "7fee9a5a3c355f3b2b2d354e5882706d756bf0e592dbf8287ac664503a1ea866",
+  "test_acc": null,
+  "resumed": true,
+  "resume_checkpoint_epoch": 30,
+  "pre_pause_active_seconds": 568.8579345998005,
+  "resumed_active_seconds": 2401.8107390999794,
+  "wall_clock_pause_excluded": true
+}

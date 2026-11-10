@@ -1,0 +1,14 @@
+{
+  "policy": "constant",
+  "seed": 17,
+  "epochs": 150,
+  "best_epoch": 124,
+  "best_val_acc": 0.6168,
+  "best_val_loss": 1.4903401077270508,
+  "final_val_acc": 0.585,
+  "training_time_seconds": 3935.9706095000147,
+  "finished_at": "2026-11-09T02:57:12.639587+00:00",
+  "best_sha256": "2b037942eaee0f19dee5ba879a6aee98e157bf8a2993910b09246c6cdc0d36ef",
+  "last_sha256": "851a7e6283e09646b007085f449dfb4abbd0a3eead418d53ee00ce0d6b77a810",
+  "test_acc": null
+}

@@ -1,0 +1,30 @@
+{
+  "policy": "constant",
+  "seed": 18,
+  "dataset": "cifar100",
+  "classes": 100,
+  "epochs": 150,
+  "scheduler": {
+    "scheduler_name": "constant",
+    "scheduler_step": "epoch",
+    "initial_lr": 0.1,
+    "min_lr": 0.1,
+    "max_lr": 0.1,
+    "scheduler_params": "fixed_lr"
+  },
+  "split_sha256": "68d62c83549784594ffa41fd1733c20481cff81fe027d4bc34ea45f0605ef6b4",
+  "normalization_sha256": "345a6b13f4cfb8ab0b9b5a0c246a1316095633bc2f94d901003308a57c91832e",
+  "source_hashes": {
+    "scripts/run_secondary_cifar100.py": "893da6932dec0d4994adc6d02949a7003f38ca397029b52bb397f0318ebaef96",
+    "train.py": "035c903fd7118d33002c7336af92ffd2413c9efe86286637bdf2842bb57df260",
+    "config.py": "145a49e4e101d4517bcb2299683758050cf7119be29b4fbb99f895e63c48d8d3",
+    "schedulers.py": "739413c94dea3e4eab727f511dc4497fa3f772cf4137e79d9653894a4b292058",
+    "models/resnet.py": "bd8c605c33607bb130cb5988b16d663e9b0bff04114d16864f1b1b11373dd55f",
+    "utils/seed.py": "58e0976c03260610b9d3de528ac1c3ffd8a409bd4ffbd220ee9a1d286abb6516",
+    "utils/metrics.py": "a4cd9677161a67c7c5faee1dcb35c87bce3d768d954f748f7dfa0b71db556a60",
+    "utils/logger.py": "64988a8bfb319be79c2158b361edb6735a59308382ce4d780a20c3bfbd4fc8fb"
+  },
+  "test_evaluation": false,
+  "started_at": "2026-11-09T07:03:28.921716+00:00",
+  "gpu": "NVIDIA GeForce RTX 5070 Ti Laptop GPU"
+}

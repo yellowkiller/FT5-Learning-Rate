@@ -1,0 +1,14 @@
+{
+  "policy": "cyclic",
+  "seed": 17,
+  "epochs": 150,
+  "best_epoch": 131,
+  "best_val_acc": 0.6996,
+  "best_val_loss": 1.3447702583312988,
+  "final_val_acc": 0.6898,
+  "training_time_seconds": 3413.5870547000086,
+  "finished_at": "2026-11-08T14:18:57.308309+00:00",
+  "best_sha256": "95c94dffcabfb6a689054699350805c096d9f5d76919c1c92225458c26b8fd2d",
+  "last_sha256": "b5054d4d398adc6824458c4ea9a364afed2f41796b520d3eb5a7ee0fe9660676",
+  "test_acc": null
+}

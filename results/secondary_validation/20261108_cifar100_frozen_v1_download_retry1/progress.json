@@ -1,0 +1,7 @@
+{
+  "policy": "warmup_cosine",
+  "seed": 18,
+  "epoch": 150,
+  "epoch_seconds": 23.5154174999916,
+  "updated_at": "2026-11-09T13:12:13.776400+00:00"
+}

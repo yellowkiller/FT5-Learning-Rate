@@ -1,0 +1,14 @@
+{
+  "policy": "warmrestart",
+  "seed": 18,
+  "epochs": 150,
+  "best_epoch": 147,
+  "best_val_acc": 0.7758,
+  "best_val_loss": 0.8956288806915284,
+  "final_val_acc": 0.7734,
+  "training_time_seconds": 3700.8059236999834,
+  "finished_at": "2026-11-09T12:11:01.302088+00:00",
+  "best_sha256": "ef9015e47044590db31a2f2e30113155df3a71f44b7e96ae2ee54a6fd47af8e4",
+  "last_sha256": "b1ab23652405abe663fd773b531f45b676b169e82ad52639c84313f25b5516e0",
+  "test_acc": null
+}

@@ -1,0 +1,7 @@
+{
+  "test_loss": 0.9005401849746704,
+  "test_acc": 0.7754,
+  "best_sha256": "3f12b2d29e179f0ba104d252626bd058137f075a907bfca82fcbfa0e64c3e534",
+  "evaluated_at": "2026-11-09T13:12:40.504076+00:00",
+  "selection": "locked validation best"
+}
